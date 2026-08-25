@@ -55,10 +55,10 @@
 \newcounter{picnum}
 \newcommand{\resetpic}{\setcounter{picnum}{0}}
 \newcommand{\resultimg}[3][0.8\textwidth]{%
-  \IfFileExists{../figures/\detokenize{#2}}{%
+  \IfFileExists{../figures/week1_picture/\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{../figures/\detokenize{#2}}
+      \includegraphics[width=#1]{../figures/week1_picture/\detokenize{#2}}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
@@ -68,10 +68,10 @@
   }%
 }
 \newcommand{\resultimgcap}[3][0.8\textwidth]{%
-  \IfFileExists{../figures/\detokenize{#2}}{%
+  \IfFileExists{../figures/week1_picture/\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{../figures/\detokenize{#2}}
+      \includegraphics[width=#1]{../figures/week1_picture/\detokenize{#2}}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
@@ -390,51 +390,353 @@ git log --all --graph --decorate --oneline
 
 % ---------- 2. 课后练习与结果 ----------
 \section{课后练习与结果}
-% 说明：课后完成 >10 个实例，每个实例按"题目 → 代码 → 运行结果"组织。
+% 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
 
 \subsection*{实例 1}
 \resetpic
-\begin{lstlisting}
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}在命令 find ~/Downloads -type f -name "*.zip" -mtime +30 中，*.zip 是一个 「glob」。什么是 glob ？新建一个测试目录并创建一些文件，试试 ls *.txt 、ls file?.txt 、ls {a,b,c}.txt 等模式。
+
+\begin{lstlisting}[language=bash]
 # TODO: 实例1代码汇总
+# 创建一批不同命名的 txt 测试文件
+touch a.txt b.txt c.txt file1.txt file2.txt file12.txt hello.txt test.txt abc.txt
+
+#测试
+ls *.txt
+ls file?.txt
+ls {a,b,c}.txt
+
+# 匹配所有 f 开头的 txt 文件
+ls f*.txt
+
+# 匹配文件名只有 1 个字符的 txt 文件
+ls ?.txt
+
+# 匹配 a/b/c 任意一个开头的 txt 文件（标准 glob 写法）
+ls [a-c].txt
+
+# 匹配文件名包含数字的 txt 文件
+ls *[0-9]*.txt
+
 \end{lstlisting}
 
-\begin{center}
-{\large\bfseries 部分实验过程截图}
-\end{center}
-
-\resultimg{week1_ex1.png}{实例一 运行结果图一}
-\resultimg{week1_ex1_2.png}{实例一 运行结果图二}
-
-\begin{center}
-{\large\bfseries 实验结果}
-\end{center}
+\textbf{运行结果：}
+Glob（全称 glob pattern，全局通配模式）是 Shell 环境中用于匹配文件名 / 路径名的简易模式匹配语法。
+（注意：大括号扩展不检查文件是否存在，哪怕没有对应文件也会展开字符串。）
+\resultimg{week1_ex1.png}{实例一 运行结果}
 
 \subsection*{实例 2}
 \resetpic
-% TODO: 继续补充实例 2 ~ 实例 10+，结构与实例 1 相同
-\begin{lstlisting}
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}' 单引号 '、"双引号" 和 \$'ANSI 引号 ' 有什么区别？写一条命令，输出一个同时包含字面量 \$、! 和换行符的字符串。
+% 后续实例 3 ~ 实例 10+ 结构相同：实验题目 → 代码 → 运行结果
+
+\begin{lstlisting}[language=bash]
 # TODO: 实例2代码汇总
+echo $'$!\n换行后的内容'
+
 \end{lstlisting}
 
-\begin{center}
-{\large\bfseries 部分实验过程截图}
-\end{center}
+\textbf{运行结果：}
+单引号是规则最严格的引用方式，被单引号包裹的所有字符均保持原始字面含义；
+双引号属于部分解析的引用方式，被双引号包裹的内容会执行变量替换与命令替换；
+ANSI-C 引号是 Bash 特有的引用语法，格式为美元符号后接单引号包裹字符串，它兼具字面量安全性与转义能力。
+\resultimg{week1_ex2.png}{实例二 运行结果}
 
-\resultimg{week1_ex2.png}{实例二 运行结果图一}
-\resultimg{week1_ex2_2.png}{实例二 运行结果图二}
+\subsection*{实例 3}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}把上一题完成的脚本保存为文件（如 check.sh）。先运行 ./check.sh somefile ，会发生什么？然后执行 chmod +x check.sh 再试一次。为什么这一步是必须的？（提示：比较 chmod 前后的 ls -l check.sh 输出）
 
-\begin{center}
-{\large\bfseries 实验结果}
-\end{center}
+\begin{lstlisting}[language=bash]
+# TODO: 实例3代码汇总
+cat > check.sh << 'EOF'
+#!/bin/bash
+# 输出同时包含字面量 $、! 和换行符的字符串
+echo $'$!\n换行后的第二行内容'
+EOF
+
+./check.sh somefile
+
+ls -l check.sh
+
+chmod +x check.sh
+
+ls -l check.sh
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+预期：首次运行 `./check.sh somefile`,会报错，脚本无法运行;执行 `chmod +x check.sh` 后，再次运行 `./check.sh somefile`，脚本可以正常执行。
+
+实际：直接执行 `./check.sh somefile` 时，未出现预期的权限报错，脚本直接正常运行。
+
+原因：Git Bash 会自动为脚本文件赋予可执行权限，因此即使未显式执行 `chmod +x`，脚本仍然可以运行。但在类 Unix 系统中，必须通过 `chmod +x` 显式设置可执行权限才能运行脚本。
+\resultimg{week1_ex3.png}{实例三 运行结果}
+
+\subsection*{实例 4}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}使用 curl 获取 [https://missing.csail.mit.edu/] 的 HTML，并通过 grep 统计列出了多少讲。（提示：找出每讲课程名称在那份 HTML 中的共性；用 curl -s 关闭进度输出。）
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例4代码汇总
+curl -s https://missing.csail.mit.edu/ | sed 's/<[^>]*>//g' | grep -E '[0-9]+/[0-9]+/[0-9]+:' | wc -l
+
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+页面中每讲课程的行都有统一的共性格式 ——「月 / 日 / 年份」
+\resultimg{week1_ex4.png}{实例四 运行结果}
+
+\subsection*{实例 5}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}One common mistake when learning Git is to commit large files that should not be managed by Git or adding sensitive information. Try adding a file to a repository, 
+making some commits and then deleting that file from history (not just the latest commit). 
+You may want to look at [https://help.github.com/articles/removing-sensitive-data-from-a-repository/].
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例5代码汇总
+# 1. 创建并进入测试仓库
+mkdir git-sensitive-test
+cd git-sensitive-test
+git init
+# 2. 第一次提交：项目初始化
+echo "Git练习项目" > README.md
+git add README.md
+git commit -m "init: 初始化项目，添加README"
+
+# 3. 第二次提交：误提交敏感配置文件
+echo "db_password=admin123" > secret_config.txt
+echo "api_key=abcdef123456" >> secret_config.txt
+git add secret_config.txt
+git commit -m "feat: 添加配置文件（误包含敏感信息）"
+
+# 4. 第三次提交：继续开发其他功能，敏感文件留在历史中
+echo "print('hello world')" > app.py
+git add app.py
+git commit -m "feat: 新增业务代码文件"
+
+#直接从**所有提交历史**中彻底删除目标文件
+git filter-repo --sensitive-data-removal --invert-paths --path secret_config.txt --force
+
+#验证，无任何输出
+git log --all --full-history -- secret_config.txt
+
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week1_ex5.png}{实例五 运行结果}
+
+\subsection*{实例 6}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}Clone some repository from GitHub, and modify one of its existing files.
+ What happens when you do ? What do you see when running ? Run to undo what you did with . In what scenario might this be useful?git stashgit log --all --onelinegit stash popgit stash
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例6代码汇总
+# 克隆公开测试仓库
+git clone https://github.com/github/gitignore.git
+
+# 进入仓库目录
+cd gitignore
+
+# 暂存当前工作区的未提交修改
+git stash
+
+# 查看暂存列表，确认修改已入栈
+git stash list
+
+# 验证工作区已恢复干净
+git status
+
+# 修改已有文件README.md，追加测试内容
+echo "# test modification for git stash" >> README.md
+
+# 查看文件修改状态
+git status
+
+# 查看所有引用下的提交记录（包含stash临时提交）
+git log --all --oneline
+
+# 恢复最近一次暂存的修改，并从栈中删除该记录
+git stash pop
+
+# 验证修改已回到工作区
+git status
+
+# 确认stash记录已移除
+git stash list
+
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week1_ex6.png}{实例六 运行结果}
+
+\subsection*{实例 7}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}与其他的命令行工具一样，Git 也提供了一个名为 ~/.gitconfig 配置文件 (或 dotfile)。
+请在 ~/.gitconfig 中创建一个别名，使您在运行 git graph 时，您可以得到 git log --all --graph --decorate --oneline 的输出结果；
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例7代码汇总
+# 1. 写入全局别名，将 git graph 映射为指定的 log 命令
+git config --global alias.graph "log --all --graph --decorate --oneline"
+
+# 2. 验证别名已写入 ~/.gitconfig 配置文件
+git config --global --get alias.graph
+
+# 3. 执行别名命令，验证效果
+git graph
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+执行 `git graph` 等价于执行完整的 `git log --all --graph --decorate --oneline`
+\resultimg{week1_ex7.png}{实例七 运行结果}
+
+\subsection*{实例 8}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}设置全局忽略文件的位置，并在其中添加常见的系统/编辑器临时文件规则。
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例8代码汇总
+# 1. 配置全局忽略文件的路径，写入 ~/.gitconfig
+git config --global core.excludesfile ~/.gitignore_global
+
+# 2. 创建全局忽略文件，并写入系统/编辑器常见临时文件规则
+cat > ~/.gitignore_global << EOF
+# macOS 系统临时文件
+.DS_Store
+
+# Windows 系统临时文件
+Thumbs.db
+desktop.ini
+
+# 通用编辑器临时文件
+*.swp
+*.swo
+*~
+
+# IDE 配置目录
+.vscode/
+.idea/
+EOF
+
+# 3. 验证全局配置已生效
+git config --global --get core.excludesfile
+
+# 4. 测试忽略效果（在当前仓库中验证）
+touch .DS_Store
+git status
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+定义的忽略规则会自动应用到所有本地仓库
+\resultimg{week1_ex8.png}{实例八 运行结果}
+
+\subsection*{实例 9}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：} 写一行命令：仅当 /tmp/mydir 不存在时才创建它。
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例9代码汇总
+# 写法1：!取反 + && 逻辑与（目录不存在时，执行创建）
+[ ! -d /tmp/mydir ] && mkdir /tmp/mydir
+
+# 写法2：|| 逻辑或（目录存在判定失败时，执行创建，效果完全等价）
+[ -d /tmp/mydir ] || mkdir /tmp/mydir
+
+# 验证目录是否创建成功
+ls -ld /tmp/mydir
+
+# 查看上一条命令的退出状态
+echo $?
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+两种写法均满足「仅当目录不存在时才创建」的要求
+\resultimg{week1_ex9.png}{实例九 运行结果}
+
+\subsection*{实例 10}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}使用管道找出你「home 目录」中最常见的 5 种文件扩展名。（提示：组合 find 、grep / sed / awk、sort、uniq -c 以及 head）。
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例10代码汇总
+# 统计 home 目录下出现频次最高的 5 种文件扩展名（屏蔽权限报错，输出更干净）
+find ~ -type f 2>/dev/null | awk -F. 'NF > 1 {print tolower($NF)}' | sort | uniq -c | sort -nr | head -5
+
+\end{lstlisting}
+
+
+\textbf{运行结果：}
+
+\resultimg{week1_ex10.png}{实例十 运行结果}
+
+\subsection*{实例 11}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}在脚本的 set 选项（flag）里加入 -x 会发生什么？写个简单脚本试试并观察输出。
+
+\begin{lstlisting}[language=bash]
+# TODO: 实例11代码汇总
+# 1. 创建测试脚本 set_x_demo.sh
+cat > set_x_demo.sh << 'EOF'
+#!/bin/bash
+set -x
+
+# 变量定义与引用
+username="student"
+echo "当前用户: $username"
+
+# 算术运算
+base=20
+calc_result=$((base * 3 - 8))
+echo "运算结果: $calc_result"
+
+# 条件分支判断
+if [ $base -ge 15 ]; then
+    echo "数值满足条件"
+fi
+EOF
+
+# 2. 赋予脚本执行权限
+chmod +x set_x_demo.sh
+
+# 3. 执行脚本并观察追踪输出
+./set_x_demo.sh
+
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week1_ex11.png}{实例十一 运行结果}
 
 \subsection*{课后阶段提交记录}
 % 课后练习的 commit 记录截图
+注：以上小文件夹涉及的.git仓库已删除，为了方便大文件夹的版本控制。
 \resultimgcap[0.9\textwidth]{week1_commit_kehou.png}{课后阶段 commit 记录}
 
 % ---------- 3. 解题感悟 ----------
 \section{解题感悟}
-% TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
-此处填写解题感悟。
+本周实验围绕 Shell 入门、Git 版本控制和 LaTeX 文档编辑三个主题展开，我在完成课上四道题目和课后练习的过程中收获了不少经验。
+
+总的来说，本周实验让我对命令行工具、版本控制和文档排版都有了更扎实的动手经验，也体会到"动手做一遍"比"看一遍教程"学得更牢固。遇到问题先看报错信息、再查文档，是最有效的解决路径。
 
 
 
