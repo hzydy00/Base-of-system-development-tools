@@ -1,0 +1,119 @@
+[33m3476c49[m[33m ([m[1;35mrefs/stash[m[33m)[m WIP on main: 57286c3 Merge pull request #4873 from lissy93-forks/updates-laravel-phpcache-dir
+[33m89c72d7[m index on main: 57286c3 Merge pull request #4873 from lissy93-forks/updates-laravel-phpcache-dir
+[33m57286c3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #4873 from lissy93-forks/updates-laravel-phpcache-dir
+[33m90db345[m Updates missing .phpunit.cache dir for newer laravel
+[33mdcc0fc7[m Merge pull request #4700 from G0rocks/main
+[33m4ae311e[m[33m ([m[1;31morigin/remove-duplicate-template[m[33m)[m Merge remote-tracking branch 'origin' into remove-duplicate-template
+[33m3780fff[m Merge pull request #4801 from NoahGreer/update-godot-gitignore-template
+[33mca6c873[m Merge pull request #4728 from TimHatchard/lasal-gitignore
+[33m7338c62[m Merge pull request #4827 from arllemfarias/patch-1
+[33m3407009[m Merge pull request #4860 from bac0id/bac0id/remove-empty-lines-cpp
+[33m8224d31[m Merge pull request #4719 from robbiemu/ai-agents
+[33me5414fa[m Remove empty line in .gitignore
+[33mcff1644[m added codex opt-in
+[33m8f2f1ed[m Move AI agents template to Global and scope default ignores
+[33m314d381[m Add *.FCBak to FreeCAD.gitignore
+[33m6a98aac[m Move FreeCAD.gitignore to community folder
+[33m9275eda[m Merge branch 'github:main' into main
+[33m1046d8f[m[33m ([m[1;31morigin/copilot/research-github-gitignore-repository[m[33m)[m Merge pull request #4846 from yufeiminds/main
+[33mb632b12[m fix: Fix comment style issues
+[33m5763345[m Merge pull request #4731 from gsilvan/main
+[33ma522191[m Merge pull request #4730 from joaodinissf/patch-1
+[33m68275fc[m Merge pull request #4727 from RiseT/patch-2
+[33m6abe9c0[m Merge pull request #4726 from RiseT/patch-1
+[33m42f7c40[m Merge pull request #4724 from elliotwutingfeng/patch-1
+[33m618ab22[m Merge pull request #4847 from putku45/putku45-patch-1
+[33m1db6a7c[m Merge pull request #4848 from andreww2012/fix/move-trailing-comments
+[33mc62fbb7[m Merge pull request #4849 from demosdemon/patch-1
+[33m9a2ae1c[m Merge pull request #4851 from nard-tech/nard-tech-patch-1
+[33m322d56f[m Fix lowercase letter in WordPress.gitignore comment
+[33mccf8d89[m Update Rust.gitignore to include rustc-ice files
+[33m14d5ead[m fix: avoid using trailing comments as gitignore doesn't support them
+[33mb0202f3[m Fix grammar and improve clarity in README
+[33m166ce88[m Merge pull request #4717 from lpalgarvio/patch-3
+[33ma4a12a4[m Merge pull request #4716 from lpalgarvio/patch-2
+[33m622da0d[m Merge pull request #4715 from lpalgarvio/patch-1
+[33mbef6d43[m Merge pull request #4706 from softwaredevelop/refactor-mql5-gitignore
+[33m1af287e[m Merge pull request #4780 from SzymonHalucha/patch-1
+[33m90ef4aa[m Merge pull request #4734 from tigran-sargsyan-w/unity-patch
+[33m248de8e[m Merge pull request #4786 from christianbraeunlich/feature/al-bclicense
+[33m24b539a[m Merge pull request #2807 from lorenzleutgeb/patch-1
+[33m25713eb[m Merge pull request #4808 from malheleco/oh-my-opencode
+[33m5f5a92f[m move gitignore template due to PR feedback
+[33m47eaa84[m fix: Remove bin
+[33m4a96a23[m fix: Remove deprecated folder and logs
+[33m071d803[m Add .gitignore for MoonBit
+[33mb423122[m Create HOL.gitignore
+[33m4d89c5d[m Merge pull request #4813 from danilofroes/solidworks-gitignore
+[33maef8819[m Merge pull request #4815 from mvanhorn/osc/zed-gitignore
+[33m8f5497c[m Merge pull request #4817 from mvanhorn/osc/tauri-gitignore
+[33m70da24e[m Merge pull request #4838 from add-uos/feat-qt-add-build-dir
+[33m4def375[m Merge pull request #4841 from DeflateAwning/deflateawning-kicad-v9-history
+[33m1a7b75f[m Merge pull request #4705 from EndrII/patch-2
+[33m81a7cc6[m Merge pull request #4472 from Snox-dev1/main
+[33m734bf73[m Merge pull request #4845 from github/remove-duplicate-ask
+[33mf86606d[m Merge pull request #4791 from kailando/main
+[33m61268c1[m Merge pull request #4269 from dsplaisted/patch-2
+[33md958809[m Merge pull request #4696 from jefferyto/macos-update
+[33m9947276[m Removes duplicate project homepage ask
+[33m13d15e9[m Removes duplicate AL.gitignore
+[33m23d3287[m[33m ([m[1;31morigin/copilot/research-global-macos-gitignore[m[33m)[m Merge pull request #4182 from brajnacs/patch-1
+[33m570fce6[m Merge pull request #4121 from KacperFKorban/scala3
+[33m1187b2c[m Merge pull request #4816 from mvanhorn/osc/deno-gitignore
+[33me094da0[m Merge pull request #4749 from justinlanejigglesoft/feature/Microchip_MPLAB_X_IDE
+[33m9d7511b[m Merge pull request #4843 from github/clarified_contribution
+[33md475389[m Remove CI passing checklist from PR template
+[33ma76c0e6[m Apply suggestions from code review
+[33md0c2ec6[m Cleans up and clarifies gitignore contribution guidelines
+[33m7247090[m Merge pull request #4811 from foxtrottNB/patch-1
+[33m5b24c90[m KiCad: Add `.history` folder to template
+[33mc677dd9[m[33m ([m[1;31morigin/copilot/research-pr-4811-analysis[m[33m, [m[1;31morigin/copilot/research-pr-4811[m[33m)[m Merge pull request #4834 from wispgitgecko9/patch-2
+[33ma786586[m Revert change to Icon rule
+[33m7441291[m feat(qt): add build directory to gitignore
+[33me9c620b[m Merge pull request #4837 from haras-unicorn/feat-nix-ignore-nixos-test-history
+[33m5853962[m Merge pull request #4826 from gxono/patch-1
+[33mc5bf3ca[m feat(nix): ignore nixos test history
+[33m7514684[m Merge pull request #4835 from ysmartin/patch-1
+[33mad49657[m Merge pull request #4836 from T1ckbase/fix/cpp-gitignore-whitespace
+[33m9ffced6[m Remove remaining trailing whitespace in C++.gitignore
+[33m49990d1[m Remove trailing whitespace in C++.gitignore
+[33m3d21cef[m Fix comment URL for Maven wrapper usage
+[33m6a7b122[m Update macOS.gitignore
+[33mde90107[m TeX: add ConTeXt utility cache file (.tuc, .tui & tuo)
+[33m84c6914[m Merge pull request #4828 from quantum9Innovation/lean-gitignore
+[33m5f76022[m fix: only match on `.lake` directory
+[33mf963896[m Merge pull request #4818 from vicgeentor/patch-1
+[33mb9ad512[m feat: create Lean.gitignore
+[33m411ca24[m Update MATLAB.gitignore
+[33m9aa86b4[m TeX: add ConTeXt utility cache file (.tua & .tuc)
+[33m6502030[m Update Lasal.gitignore with additional entries
+[33mbf4440e[m Add rule for Godot temp extension library copies on Windows
+[33md36057a[m Added lob and lba exceptions for SigCLib
+[33m8431b56[m include MAlonzo directories in any location
+[33m3b288cf[m Add Tauri to community gitignore templates
+[33m3304408[m Add Deno.gitignore
+[33me81fea5[m Add Zed editor to Global gitignore templates
+[33mc97a737[m Enhance SolidWorks.gitignore for case sensitivity
+[33m7db9624[m Add gitignore for SolidWorks projects
+[33m6836b38[m Add ignore rule for TwinCAT Measurement files
+[33ma850db9[m Add gitignore to exclude sisyphus directory files
+[33mf6eef37[m Update Python.gitignore (pixi)
+[33mb4105e7[m Merge pull request #4707 from stone-w4tch3r/patch-1
+[33m2a4ac93[m ignore all files with `celerybeat-schedule` prefix
+[33m399559e[m Resolve merge conflicts for PR #4300
+[33m53fee13[m Merge pull request #4790 from github/bump-stale-close-time
+[33m01714f2[m Update stale PR messages and inactivity duration comments
+[33me07ecef[m Extend stale PR closure period to 365 days
+[33m98608a8[m Merge branch 'github:main' into feature/al-bclicense
+[33m96a4472[m Merge pull request #4752 from moezgwall/improve-cpp-gitignore
+[33m315e8cb[m Update Unity.gitignore to add new ignore patterns
+[33m86922ae[m Merge pull request #4747 from mikekistler/patch-1
+[33m003ac16[m Merge pull request #4746 from yutamago/feature/jetbrains-copilot-migration-files
+[33mf0d1510[m Apply suggestion from @thorrsson
+[33m7ecf2d3[m Apply suggestion from @thorrsson
+[33m63c110e[m Improve C++.gitignore
+[33m844333a[m added .claude/ (by popular demand) and .gemini/
+[33me0041f1[m Created Microchip_MPLAB_X_IDE.gitignore file.
+[33med85cd9[m Add .env to gitignore for dotenv files
+[33ma19adfd[m Ignore GitHub Copilot migration files
+[33me64eaca[m
