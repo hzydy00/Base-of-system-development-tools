@@ -1,43 +1,31 @@
 \documentclass{article}
-% 加载数学公式宏包
 \usepackage{amsmath}
-% 加载表格标题优化宏包
 \usepackage{caption}
 \usepackage[UTF8]{ctex}
 
 \begin{document}
-
 \title{Tool Report}
-
 \author{曾奕豪 - 25100021005}
 \maketitle
 
 \section{Result}
 
-% ===== 公式部分 =====
 % 正文引用公式：\eqref{标签名} 会自动生成带括号的公式编号
 如式 \eqref{eq:sum} 所示，这是一个标准的自然数求和公式。
-
 % equation 环境：自动生成公式编号
-% \label 给公式打标签，用于交叉引用
 \begin{equation}
     \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
-    \label{eq:sum}
+    \label{eq:sum}  % \label 给公式打标签，用于交叉引用
 \end{equation}
 
-% ===== 表格部分 =====
 % 正文引用表格：\ref{标签名} 会自动生成表格编号
 实验的核心参数统计如表 \ref{tab:params} 所示。
-
 % table 浮动体环境：存放表格、标题和标签
-% [h] 表示尽量放在当前位置
 \begin{table}[h]
     \centering % 表格居中
     \caption{实验核心参数表} % 表格标题
     \label{tab:params} % 表格标签，用于引用
-    
     % 2行2列表格：{|c|c|} 表示两列居中、带竖线
-    % \hline 是横线
     \begin{tabular}{|c|c|}
         \hline
         参数名称 & 参数数值 \\
@@ -46,5 +34,4 @@
         \hline
     \end{tabular}
 \end{table}
-
 \end{document}
