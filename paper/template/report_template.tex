@@ -5,6 +5,8 @@
 %  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
 %  说明：本模板不依赖任何图片即可编译；
 %        图片文件存在时自动插入，不存在时显示占位提示框。
+%  图片统一放在 paper/figures/weekN_picture/ 子文件夹中（N 为周次），
+%        命名规则 weekN_xxx.png；每周只需修改下面的 \Week 即可。
 % ============================================================
 
 \documentclass[12pt,a4paper]{article}
@@ -15,7 +17,7 @@
 \usepackage[UTF8]{ctex}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-\graphicspath{{../figures/}}   % 图片统一放在 paper/figures/ 下
+\graphicspath{{../figures/}}   % 图片统一放在 paper/figures/ 下（实际查找由 \picdir 定位到子文件夹）
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{xcolor}
@@ -46,34 +48,37 @@
   showstringspaces=false,
 }
 
-% ---------- 图片自动插入宏 ----------
-% 题内图片：图注自动按「图一、图二...」编号。
-%   \resetpic              每题开头调用一次，重置编号
-%   \resultimg[宽度]{图片文件名}   图片存在→插入；不存在→显示占位框（不报错）
+% ---------- 图片插入宏 ----------
+% 题内图片：图注手动指定文字，不自动编号。
+% 图片统一放在 paper/figures/week\Week{}_picture/ 子文件夹中，
+% 文件名建议带周次前缀（如 week1_q1.png），每周只需修改 \Week 即可。
+%   \resetpic              每题开头调用一次（保留自 week1，兼容旧结构）
+%   \resultimg[宽度]{图片文件名}{图注}   图片存在→插入；不存在→占位框（不报错）
 % 自定义图注（如 commit 截图）：
 %   \resultimgcap[宽度]{图片文件名}{图注}
 \newcounter{picnum}
 \newcommand{\resetpic}{\setcounter{picnum}{0}}
-\newcommand{\resultimg}[2][0.8\textwidth]{%
-  \stepcounter{picnum}
-  \IfFileExists{\detokenize{#2}}{%
+% 图片目录：根据 \Week 自动定位到 weekN_picture 子文件夹
+\newcommand{\picdir}{../figures/week\Week{}_picture/}
+\newcommand{\resultimg}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{\detokenize{#2}}
-      \caption{图\chinese{picnum}}
+      \includegraphics[width=#1]{\picdir\detokenize{#2}}
+      \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
     \begin{center}
-      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small 图\chinese{picnum}}}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
     \end{center}%
   }%
 }
 \newcommand{\resultimgcap}[3][0.8\textwidth]{%
-  \IfFileExists{\detokenize{#2}}{%
+  \IfFileExists{\picdir\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{\detokenize{#2}}
-      \caption{#3}
+      \includegraphics[width=#1]{\picdir\detokenize{#2}}
+      \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
     \begin{center}
@@ -107,86 +112,259 @@
 % ---------- 1. 课上内容与结果 ----------
 \section{课上内容与结果}
 % 开头先简述本周实验的主题、目标与涉及的工具 / 技术，再逐题列出课上内容。
-% 课上完成 4 个不同主题的题目，每题按"题目要求 → 代码 → 运行结果"组织。
+% 课上完成 4 个不同主题的题目，每题按「题目要求 → 代码 → 过程截图 → 实验结果」组织。
 此处填写本周实验的主题、目标与涉及的工具 / 技术。
+
+\subsection*{实验环境}
+% 简述本实验的操作系统、命令行环境、所用工具及其版本。
+此处填写实验环境说明。
 
 \subsection*{题目一}
 \resetpic
-% TODO: 简述题目要求。
-\begin{lstlisting}
+% 题目一 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week{}_q1.png}{题目一 题目要求}
+
+\begin{lstlisting}[language=bash]
 # TODO: 题目一代码汇总
 
 \end{lstlisting}
 
-\resultimg{week1_check1.png}
-\resultimg{week1_check1_2.png}
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week{}_check1.png}{题目一 实验过程截图}
+\resultimg{week\Week{}_check1_2.png}{题目一 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+此处填写题目一的实验结果说明。
 
 \subsection*{题目二}
 \resetpic
-% TODO: 题目要求、代码、结果
-\begin{lstlisting}
+% 题目二 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week{}_q2.png}{题目二 题目要求}
+
+\begin{lstlisting}[language=bash]
 # TODO: 题目二代码汇总
+
 \end{lstlisting}
 
-\resultimg{week1_check2.png}
-\resultimg{week1_check2_2.png}
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week{}_check2.png}{题目二 实验过程截图}
+\resultimg{week\Week{}_check2_2.png}{题目二 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+此处填写题目二的实验结果说明。
 
 \subsection*{题目三}
 \resetpic
-% TODO: 题目要求、代码、结果
-\begin{lstlisting}
+% 题目三 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week{}_q3.png}{题目三 题目要求}
+
+\begin{lstlisting}[language=bash]
 # TODO: 题目三代码汇总
+
 \end{lstlisting}
 
-\resultimg{week1_check3.png}
-\resultimg{week1_check3_2.png}
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week{}_check3.png}{题目三 实验过程截图}
+\resultimg{week\Week{}_check3_2.png}{题目三 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+此处填写题目三的实验结果说明。
 
 \subsection*{题目四}
 \resetpic
-% TODO: 题目要求、代码、结果
-\begin{lstlisting}
+% 题目四 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week{}_q4.png}{题目四 题目要求}
+
+\begin{lstlisting}[language=bash]
 # TODO: 题目四代码汇总
+
 \end{lstlisting}
 
-\resultimg{week1_check4.png}
-\resultimg{week1_check4_2.png}
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week{}_check4.png}{题目四 实验过程截图}
+\resultimg{week\Week{}_check4_2.png}{题目四 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+此处填写题目四的实验结果说明。
 
 \subsection*{课上阶段提交记录}
 % 课上 4 题的 commit 记录截图（git log 或仓库 commits 列表）
-\resultimgcap[0.9\textwidth]{week1_commit_kecheng.png}{课上阶段 commit 记录}
+\resultimgcap[0.9\textwidth]{week\Week{}_commit_kecheng.png}{课上阶段 commit 记录}
 
 % ---------- 2. 课后练习与结果 ----------
 \section{课后练习与结果}
-% 说明：课后完成 >10 个实例，每个实例按"题目 → 代码 → 运行结果"组织。
+% 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
 
 \subsection*{实例 1}
 \resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例一的实验题目与要求描述。
+
 \begin{lstlisting}
 # TODO: 实例1代码汇总
 \end{lstlisting}
 
-\resultimg{week1_ex1.png}
-\resultimg{week1_ex1_2.png}
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex1.png}{实例一 运行结果}
 
 \subsection*{实例 2}
 \resetpic
-% TODO: 继续补充实例 2 ~ 实例 10+，结构与实例 1 相同
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
+
 \begin{lstlisting}
 # TODO: 实例2代码汇总
 \end{lstlisting}
 
-\resultimg{week1_ex2.png}
-\resultimg{week1_ex2_2.png}
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex2.png}{实例二 运行结果}
+
+\subsection*{实例 3}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例3代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex3.png}{实例三 运行结果}
+
+\subsection*{实例 4}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例4代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex4.png}{实例四 运行结果}
+
+\subsection*{实例 5}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例5代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex5.png}{实例五 运行结果}
+
+\subsection*{实例 6}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例6代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex6.png}{实例六 运行结果}
+
+\subsection*{实例 7}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例7代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex7.png}{实例七 运行结果}
+
+\subsection*{实例 8}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例8代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex8.png}{实例八 运行结果}
+
+\subsection*{实例 9}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例9代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex9.png}{实例九 运行结果}
+
+\subsection*{实例 10}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例10代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex10.png}{实例十 运行结果}
+
+\subsection*{实例 11}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例11代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week{}_ex11.png}{实例十一 运行结果}
 
 \subsection*{课后阶段提交记录}
 % 课后练习的 commit 记录截图
-\resultimgcap[0.9\textwidth]{week1_commit_kehou.png}{课后阶段 commit 记录}
+\resultimgcap[0.9\textwidth]{week\Week{}_commit_kehou.png}{课后阶段 commit 记录}
 
 % ---------- 3. 解题感悟 ----------
 \section{解题感悟}
 % TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
 此处填写解题感悟。
-
-
 
 \end{document}
