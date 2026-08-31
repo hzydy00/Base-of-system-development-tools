@@ -1,0 +1,473 @@
+% ============================================================
+%  系统开发工具基础 · 实验报告 
+%  作者：曾奕豪
+%  编译方式：XeLaTeX（需 ctex 宏包支持中文）
+%  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
+%  说明：本模板不依赖任何图片即可编译；
+%        图片文件存在时自动插入，不存在时显示占位提示框。
+%  图片统一放在 paper/figures/weekN_picture/ 子文件夹中（N 为周次），
+%        命名规则 weekN_xxx.png；每周只需修改下面的 \Week 即可。
+% ============================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ---------- 中文字体与页面 ----------
+% 中文支持：使用 ctex 宏包（编译用 XeLaTeX）。
+% 若在 Linux/TeX Live 下缺少 ctex，可安装 texlive-lang-chinese。
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+
+% ---------- 页眉 / 页脚 ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{实验报告 · 第 \Week 周}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 代码高亮环境 ----------
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{gray!70!black}\itshape,
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  captionpos=b,
+  showstringspaces=false,
+}
+
+% ---------- 图片插入宏 ----------
+% 题内图片：图注手动指定文字，不自动编号。
+% 图片统一放在 paper/figures/week\Week_picture/ 子文件夹中，
+% 文件名建议带周次前缀（如 week1_q1.png），每周只需修改 \Week 即可。
+%   \resetpic              每题开头调用一次（保留自 week1，兼容旧结构）
+%   \resultimg[宽度]{图片文件名}{图注}   图片存在→插入；不存在→占位框（不报错）
+% 自定义图注（如 commit 截图）：
+%   \resultimgcap[宽度]{图片文件名}{图注}
+\newcounter{picnum}
+\newcommand{\resetpic}{\setcounter{picnum}{0}}
+% 图片目录：根据 \Week 自动定位到 weekN_picture 子文件夹
+\newcommand{\picdir}{../../figures/week\Week_picture/}
+\newcommand{\resultimg}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+\newcommand{\resultimgcap}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+
+% ---------- 文档信息（每周只需改这三处） ----------
+\newcommand{\Week}{2}                        % 周次
+\newcommand{\ReportTitle}{系统开发工具基础实验报告}
+\newcommand{\ReportDate}{\today} % 日期，编译时自动取当天
+\newcommand{\RepoLink}{https://github.com/hzydy00/Base-of-system-development-tools} % 仓库链接
+
+% ============================================================
+\begin{document}
+
+% ---------- 封面 / 标题区 ----------
+\begin{center}
+  {\LARGE\bfseries \ReportTitle}\\[6pt]
+  {\Large 第 \Week\ 周}\\[12pt]
+  {\large 姓名：曾奕豪}\\
+  {\large 课程：系统开发工具基础}\\[6pt]
+  {\large \ReportDate}\\[16pt]
+  {\large 仓库：\url{\RepoLink}}
+\end{center}
+\vspace{0.8em}
+\hrule
+\vspace{1.2em}
+
+% ---------- 1. 课上内容与结果 ----------
+\section{课上内容与结果}
+% 开头先简述本周实验的主题、目标与涉及的工具 / 技术，再逐题列出课上内容。
+% 课上完成 4 个不同主题的题目，每题按「题目要求 → 代码 → 过程截图 → 实验结果」组织。
+\subsection*{学习主题}
+命令行环境；开发环境与工具；DebuggingandProfiling
+
+\subsection*{实验环境}
+% 简述本实验的操作系统、命令行环境、所用工具及其版本。
+本实验基于 Windows 11 操作系统，实验涉及的 Shell 操作均在 Git Bash 中完成；版本控制使用 Git ；LaTeX 文档采用  XeLaTeX 编译，并通过 ctex 宏包中文排版。
+
+\subsection*{题目一}
+\resetpic
+% 题目一 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q1.png}{题目一 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目一代码汇总
+cat > worker.sh <<'EOF'
+> #!/usr/bin/env bash
+trap 'echo CLEAN_EXIT >> cleanup.log; exit 0' TERM INT
+n=0
+while true; do
+echo "$n"
+n=$((n+1))
+sleep 1
+done
+> EOF
+
+chmod +x worker.sh
+
+./worker.sh > stdout.log 2> stderr.log
+[1]+  Stopped             ./worker.sh > stdout.log 2> stderr.log
+
+bg #后台运行
+[1]+ ./worker.sh > stdout.log 2> stderr.log &
+
+jobs #确认状态
+[1]+  Running            ./worker.sh > stdout.log 2> stderr.log &
+
+kill (jobs -p) #杀死进程
+
+
+cat cleanup.log #获取日志，返回CLEAN_EXIT
+
+jobs
+
+cat stdout.log
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check1.png}{题目一 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+1. 输出重定向效果：脚本运行期间，`stdout.log` 会每秒追加
+一行递增的整数（0、1、2…）；脚本无错误输出，因此 `stderr.log` 保持为空。
+
+2. 任务状态变化：Ctrl+Z 后任务进入 `Stopped`（暂停）状态；执行 `bg` 后转为
+ `Running`（后台运行）状态，`jobs` 命令可看到作业编号与对应状态。
+
+3. 信号与优雅退出：发送 SIGTERM 后，进程被 trap 捕获信号，执行日志写入
+逻辑后正常退出；cleanup.log 文件中会出现一行 CLEAN\_EXIT。
+
+
+\subsection*{题目二}
+\resetpic
+% 题目二 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q2.png}{题目二 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目二代码汇总
+
+#导入math_utils.p，app.py，test_math_utils.py文件
+
+#按F2重命名符号，shift+F12查找，ctrl+点击跳转
+
+#import os 后，ruff检查与一键修复
+python -m ruff check .
+
+python -m ruff check --fix .
+
+#pytest测试通过
+python -m pytest test_math_utils.py -v
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check2.png}{题目二 实验过程截图}
+\resultimg{week\Week_check2_2.png}{题目二 实验过程截图}
+\resultimg{week\Week_check2_3.png}{题目二 实验过程截图}
+\resultimg{week\Week_check2_4.png}{题目二 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+1. 语义重构（重命名符号）后，三个文件的定义和引用全部同步更新，程序功能不受影响，输出仍为 `50.0`。
+
+2. ruff 成功识别未使用的 `import os`（F401 规则），并通过 `--fix` 自动删除。
+
+3. 最终 ruff 零报错、pytest 全部通过，满足题目所有要求。
+
+\subsection*{题目三}
+\resetpic
+% 题目三 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q3.png}{题目三 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目三代码汇总
+#将原代码第8行i改为j
+# 编写test_merge_sort.py文件，使用pytest测试merge_sort函数
+from merge_sort import merge_sort
+
+def test_given_input():
+    """测试用例1：题目给定的输入数组"""
+    arr = [3, 1, 4, 1, 5, 9, 2, 6]
+    # 断言：排序后的结果等于预期的升序数组
+    assert merge_sort(arr) == [1, 1, 2, 3, 4, 5, 6, 9]
+
+def test_duplicate_elements():
+    """测试用例2：包含大量重复元素的数组"""
+    # 构造重复元素密集的测试用例，验证算法稳定性和边界处理
+    arr = [2, 2, 1, 3, 2, 5, 4, 2]
+    assert merge_sort(arr) == [1, 2, 2, 2, 2, 3, 4, 5]
+
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check3.png}{题目三 实验过程截图：确认输出结果有误}
+\resultimg{week\Week_check3_2.png}{题目三 实验过程截图：设置断点，发现错误并修改}
+\resultimg{week\Week_check3_3.png}{题目三 实验过程截图：用pytest测试，确认修改后输出正确}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+1. 调试定位：通过 VS Code IDE 调试器在 `merge` 函数内设置断点、单步执行并观察 `i`、`j`、`left[i]`、`right[j]` 变量，精准定位根因：右数组元素读取与指针不匹配，属于双指针索引笔误。
+
+2. 修复效果：执行最小修复，仅将 `right[i]` 修正为 `right[j]`，未改动算法整体逻辑、未使用 `sorted` 替换；修复后运行给定输入，输出正确升序结果 `[1, 1, 2, 3, 4, 5, 6, 9]`。
+
+3. 测试验证：编写 2 个 pytest 测试用例（题目给定输入、含重复元素的数组），运行后全部通过，验证了修复后算法的基础排序功能与重复元素场景下的稳定性，完全满足题目要求。
+
+\subsection*{题目四}
+\resetpic
+% 题目四 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q4.png}{题目四 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目四代码汇总
+
+#计算优化前的程序耗时
+time python wordfreq.py
+
+#集合去重
+# wordfreq_optimized.py
+words = open("words.txt", encoding="utf-8").read().split()
+unique = set(words)
+print("count=", len(unique))
+
+#计算优化后的程序耗时
+time python wordfreq_optimized.py
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check4.png}{题目四 实验过程截图:优化前中位耗时 = (0.313 + 0.328) ÷ 2 = 0.3205 秒}
+\resultimg{week\Week_check4_2.png}{题目四 实验过程截图:核心耗时集中在主程序执行（wordfreq.py:1(<module>)）}
+\resultimg{week\Week_check4_3.png}{题目四 实验过程截图:优化前中位耗时 = (0.221 + 0.220) ÷ 2 = 0.2205 秒,加速比=0.3205 ÷ 0.2205 ≈ 1.45}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+1. 原始基准性能：
+列表遍历去重（O (n²) 复杂度），两次运行中位耗时 0.3205s，输出结果 `count=1000`。
+
+2. 优化后性能：
+集合哈希去重（O (n) 复杂度），两次运行中位耗时 0.2205s，输出 `count=1000`，与原程序结果完全一致，符合要求。
+
+3. 核心结论：
+总耗时加速比约 1.45 倍；cProfile 定位出：列表的顺序成员查找是原程序的核心性能瓶颈。
+
+
+\subsection*{课上阶段提交记录}
+% 课上 4 题的 commit 记录截图（git log 或仓库 commits 列表）
+\resultimgcap[0.9\textwidth]{week\Week_commit_kecheng.png}{课上阶段 commit 记录}
+
+% ---------- 2. 课后练习与结果 ----------
+\section{课后练习与结果}
+% 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
+
+\subsection*{实例 1}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例1代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex1.png}{实例一 运行结果}
+
+\subsection*{实例 2}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例2代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex2.png}{实例二 运行结果}
+
+\subsection*{实例 3}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例3代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex3.png}{实例三 运行结果}
+
+\subsection*{实例 4}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例4代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex4.png}{实例四 运行结果}
+
+\subsection*{实例 5}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例5代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex5.png}{实例五 运行结果}
+
+\subsection*{实例 6}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例6代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex6.png}{实例六 运行结果}
+
+\subsection*{实例 7}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例7代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex7.png}{实例七 运行结果}
+
+\subsection*{实例 8}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例8代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex8.png}{实例八 运行结果}
+
+\subsection*{实例 9}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例9代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex9.png}{实例九 运行结果}
+
+\subsection*{实例 10}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例10代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex10.png}{实例十 运行结果}
+
+\subsection*{实例 11}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例11代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex11.png}{实例十一 运行结果}
+
+\subsection*{课后阶段提交记录}
+% 课后练习的 commit 记录截图
+\resultimgcap[0.9\textwidth]{week\Week_commit_kehou.png}{课后阶段 commit 记录}
+
+% ---------- 3. 解题感悟 ----------
+\section{解题感悟}
+% TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
+此处填写解题感悟。
+
+\end{document}

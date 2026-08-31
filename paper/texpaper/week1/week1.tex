@@ -1,5 +1,5 @@
 % ============================================================
-%  系统开发工具基础 · 实验报告 LaTeX 模板
+%  系统开发工具基础 · 实验报告 
 %  作者：曾奕豪
 %  编译方式：XeLaTeX（需 ctex 宏包支持中文）
 %  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
@@ -15,7 +15,7 @@
 \usepackage[UTF8]{ctex}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-\graphicspath{{../figures/}}   % 图片统一放在 paper/figures/ 下
+\graphicspath{{../../figures/week1_picture/}}   % 图片统一放在 paper/figures/week1_picture/ 下
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{xcolor}
@@ -55,10 +55,10 @@
 \newcounter{picnum}
 \newcommand{\resetpic}{\setcounter{picnum}{0}}
 \newcommand{\resultimg}[3][0.8\textwidth]{%
-  \IfFileExists{../figures/week1_picture/\detokenize{#2}}{%
+  \IfFileExists{../../figures/week1_picture/\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{../figures/week1_picture/\detokenize{#2}}
+      \includegraphics[width=#1]{../../figures/week1_picture/\detokenize{#2}}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
@@ -68,10 +68,10 @@
   }%
 }
 \newcommand{\resultimgcap}[3][0.8\textwidth]{%
-  \IfFileExists{../figures/week1_picture/\detokenize{#2}}{%
+  \IfFileExists{../../figures/week1_picture/\detokenize{#2}}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{../figures/week1_picture/\detokenize{#2}}
+      \includegraphics[width=#1]{../../figures/week1_picture/\detokenize{#2}}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%

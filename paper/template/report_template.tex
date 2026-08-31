@@ -1,5 +1,5 @@
 % ============================================================
-%  系统开发工具基础 · 实验报告 LaTeX 模板
+%  系统开发工具基础 · 实验报告 
 %  作者：曾奕豪
 %  编译方式：XeLaTeX（需 ctex 宏包支持中文）
 %  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
@@ -17,7 +17,6 @@
 \usepackage[UTF8]{ctex}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-\graphicspath{{../figures/}}   % 图片统一放在 paper/figures/ 下（实际查找由 \picdir 定位到子文件夹）
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{xcolor}
@@ -50,7 +49,7 @@
 
 % ---------- 图片插入宏 ----------
 % 题内图片：图注手动指定文字，不自动编号。
-% 图片统一放在 paper/figures/week\Week{}_picture/ 子文件夹中，
+% 图片统一放在 paper/figures/week\Week_picture/ 子文件夹中，
 % 文件名建议带周次前缀（如 week1_q1.png），每周只需修改 \Week 即可。
 %   \resetpic              每题开头调用一次（保留自 week1，兼容旧结构）
 %   \resultimg[宽度]{图片文件名}{图注}   图片存在→插入；不存在→占位框（不报错）
@@ -59,12 +58,12 @@
 \newcounter{picnum}
 \newcommand{\resetpic}{\setcounter{picnum}{0}}
 % 图片目录：根据 \Week 自动定位到 weekN_picture 子文件夹
-\newcommand{\picdir}{../figures/week\Week{}_picture/}
+\newcommand{\picdir}{../../figures/week\Week_picture/}
 \newcommand{\resultimg}[3][0.8\textwidth]{%
-  \IfFileExists{\picdir\detokenize{#2}}{%
+  \IfFileExists{\picdir #2}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{\picdir\detokenize{#2}}
+      \includegraphics[width=#1]{\picdir #2}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
@@ -74,10 +73,10 @@
   }%
 }
 \newcommand{\resultimgcap}[3][0.8\textwidth]{%
-  \IfFileExists{\picdir\detokenize{#2}}{%
+  \IfFileExists{\picdir #2}{%
     \begin{figure}[H]
       \centering
-      \includegraphics[width=#1]{\picdir\detokenize{#2}}
+      \includegraphics[width=#1]{\picdir #2}
       \parbox{0.8\textwidth}{\centering\small #3}
     \end{figure}%
   }{%
@@ -88,7 +87,7 @@
 }
 
 % ---------- 文档信息（每周只需改这三处） ----------
-\newcommand{\Week}{1}                        % 周次
+\newcommand{\Week}{N}                        % 周次
 \newcommand{\ReportTitle}{系统开发工具基础实验报告}
 \newcommand{\ReportDate}{\today} % 日期，编译时自动取当天
 \newcommand{\RepoLink}{https://github.com/hzydy00/Base-of-system-development-tools} % 仓库链接
@@ -113,6 +112,7 @@
 \section{课上内容与结果}
 % 开头先简述本周实验的主题、目标与涉及的工具 / 技术，再逐题列出课上内容。
 % 课上完成 4 个不同主题的题目，每题按「题目要求 → 代码 → 过程截图 → 实验结果」组织。
+\subsection*{学习主题}
 此处填写本周实验的主题、目标与涉及的工具 / 技术。
 
 \subsection*{实验环境}
@@ -122,7 +122,7 @@
 \subsection*{题目一}
 \resetpic
 % 题目一 问题截图（放在代码汇总之前）
-\resultimgcap[0.8\textwidth]{week\Week{}_q1.png}{题目一 题目要求}
+\resultimgcap[0.8\textwidth]{week\Week_q1.png}{题目一 题目要求}
 
 \begin{lstlisting}[language=bash]
 # TODO: 题目一代码汇总
@@ -133,8 +133,8 @@
 {\large\bfseries 部分实验过程截图}
 \end{center}
 
-\resultimg{week\Week{}_check1.png}{题目一 实验过程截图}
-\resultimg{week\Week{}_check1_2.png}{题目一 实验过程截图}
+\resultimg{week\Week_check1.png}{题目一 实验过程截图}
+\resultimg{week\Week_check1_2.png}{题目一 实验过程截图}
 
 \begin{center}
 {\large\bfseries 实验结果}
@@ -144,7 +144,7 @@
 \subsection*{题目二}
 \resetpic
 % 题目二 问题截图（放在代码汇总之前）
-\resultimgcap[0.8\textwidth]{week\Week{}_q2.png}{题目二 题目要求}
+\resultimgcap[0.8\textwidth]{week\Week_q2.png}{题目二 题目要求}
 
 \begin{lstlisting}[language=bash]
 # TODO: 题目二代码汇总
@@ -155,8 +155,8 @@
 {\large\bfseries 部分实验过程截图}
 \end{center}
 
-\resultimg{week\Week{}_check2.png}{题目二 实验过程截图}
-\resultimg{week\Week{}_check2_2.png}{题目二 实验过程截图}
+\resultimg{week\Week_check2.png}{题目二 实验过程截图}
+\resultimg{week\Week_check2_2.png}{题目二 实验过程截图}
 
 \begin{center}
 {\large\bfseries 实验结果}
@@ -166,7 +166,7 @@
 \subsection*{题目三}
 \resetpic
 % 题目三 问题截图（放在代码汇总之前）
-\resultimgcap[0.8\textwidth]{week\Week{}_q3.png}{题目三 题目要求}
+\resultimgcap[0.8\textwidth]{week\Week_q3.png}{题目三 题目要求}
 
 \begin{lstlisting}[language=bash]
 # TODO: 题目三代码汇总
@@ -177,8 +177,8 @@
 {\large\bfseries 部分实验过程截图}
 \end{center}
 
-\resultimg{week\Week{}_check3.png}{题目三 实验过程截图}
-\resultimg{week\Week{}_check3_2.png}{题目三 实验过程截图}
+\resultimg{week\Week_check3.png}{题目三 实验过程截图}
+\resultimg{week\Week_check3_2.png}{题目三 实验过程截图}
 
 \begin{center}
 {\large\bfseries 实验结果}
@@ -188,7 +188,7 @@
 \subsection*{题目四}
 \resetpic
 % 题目四 问题截图（放在代码汇总之前）
-\resultimgcap[0.8\textwidth]{week\Week{}_q4.png}{题目四 题目要求}
+\resultimgcap[0.8\textwidth]{week\Week_q4.png}{题目四 题目要求}
 
 \begin{lstlisting}[language=bash]
 # TODO: 题目四代码汇总
@@ -199,8 +199,8 @@
 {\large\bfseries 部分实验过程截图}
 \end{center}
 
-\resultimg{week\Week{}_check4.png}{题目四 实验过程截图}
-\resultimg{week\Week{}_check4_2.png}{题目四 实验过程截图}
+\resultimg{week\Week_check4.png}{题目四 实验过程截图}
+\resultimg{week\Week_check4_2.png}{题目四 实验过程截图}
 
 \begin{center}
 {\large\bfseries 实验结果}
@@ -209,7 +209,7 @@
 
 \subsection*{课上阶段提交记录}
 % 课上 4 题的 commit 记录截图（git log 或仓库 commits 列表）
-\resultimgcap[0.9\textwidth]{week\Week{}_commit_kecheng.png}{课上阶段 commit 记录}
+\resultimgcap[0.9\textwidth]{week\Week_commit_kecheng.png}{课上阶段 commit 记录}
 
 % ---------- 2. 课后练习与结果 ----------
 \section{课后练习与结果}
@@ -226,7 +226,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex1.png}{实例一 运行结果}
+\resultimg{week\Week_ex1.png}{实例一 运行结果}
 
 \subsection*{实例 2}
 \resetpic
@@ -239,7 +239,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex2.png}{实例二 运行结果}
+\resultimg{week\Week_ex2.png}{实例二 运行结果}
 
 \subsection*{实例 3}
 \resetpic
@@ -252,7 +252,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex3.png}{实例三 运行结果}
+\resultimg{week\Week_ex3.png}{实例三 运行结果}
 
 \subsection*{实例 4}
 \resetpic
@@ -265,7 +265,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex4.png}{实例四 运行结果}
+\resultimg{week\Week_ex4.png}{实例四 运行结果}
 
 \subsection*{实例 5}
 \resetpic
@@ -278,7 +278,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex5.png}{实例五 运行结果}
+\resultimg{week\Week_ex5.png}{实例五 运行结果}
 
 \subsection*{实例 6}
 \resetpic
@@ -291,7 +291,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex6.png}{实例六 运行结果}
+\resultimg{week\Week_ex6.png}{实例六 运行结果}
 
 \subsection*{实例 7}
 \resetpic
@@ -304,7 +304,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex7.png}{实例七 运行结果}
+\resultimg{week\Week_ex7.png}{实例七 运行结果}
 
 \subsection*{实例 8}
 \resetpic
@@ -317,7 +317,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex8.png}{实例八 运行结果}
+\resultimg{week\Week_ex8.png}{实例八 运行结果}
 
 \subsection*{实例 9}
 \resetpic
@@ -330,7 +330,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex9.png}{实例九 运行结果}
+\resultimg{week\Week_ex9.png}{实例九 运行结果}
 
 \subsection*{实例 10}
 \resetpic
@@ -343,7 +343,7 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex10.png}{实例十 运行结果}
+\resultimg{week\Week_ex10.png}{实例十 运行结果}
 
 \subsection*{实例 11}
 \resetpic
@@ -356,11 +356,11 @@
 
 \textbf{运行结果：}
 
-\resultimg{week\Week{}_ex11.png}{实例十一 运行结果}
+\resultimg{week\Week_ex11.png}{实例十一 运行结果}
 
 \subsection*{课后阶段提交记录}
 % 课后练习的 commit 记录截图
-\resultimgcap[0.9\textwidth]{week\Week{}_commit_kehou.png}{课后阶段 commit 记录}
+\resultimgcap[0.9\textwidth]{week\Week_commit_kehou.png}{课后阶段 commit 记录}
 
 % ---------- 3. 解题感悟 ----------
 \section{解题感悟}
