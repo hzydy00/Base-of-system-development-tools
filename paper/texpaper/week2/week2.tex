@@ -226,7 +226,7 @@ python -m pytest test_math_utils.py -v
 % 题目三 问题截图（放在代码汇总之前）
 \resultimgcap[0.8\textwidth]{week\Week_q3.png}{题目三 题目要求}
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=python]
 # TODO: 题目三代码汇总
 #将原代码第8行i改为j
 # 编写test_merge_sort.py文件，使用pytest测试merge_sort函数
@@ -271,7 +271,7 @@ def test_duplicate_elements():
 % 题目四 问题截图（放在代码汇总之前）
 \resultimgcap[0.8\textwidth]{week\Week_q4.png}{题目四 题目要求}
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=python]
 # TODO: 题目四代码汇总
 
 #计算优化前的程序耗时
@@ -294,7 +294,7 @@ time python wordfreq_optimized.py
 
 \resultimg{week\Week_check4.png}{题目四 实验过程截图:优化前中位耗时 = (0.313 + 0.328) ÷ 2 = 0.3205 秒}
 \resultimg{week\Week_check4_2.png}{题目四 实验过程截图:核心耗时集中在主程序执行（wordfreq.py:1(<module>)）}
-\resultimg{week\Week_check4_3.png}{题目四 实验过程截图:优化前中位耗时 = (0.221 + 0.220) ÷ 2 = 0.2205 秒,加速比=0.3205 ÷ 0.2205 ≈ 1.45}
+\resultimg{week\Week_check4_3.png}{题目四 实验过程截图:优化前中位耗时 = (0.221 + 0.220) ÷ 2 = 0.2205 秒,加速比=0.3205 ÷ 0.2205 = 1.45}
 
 \begin{center}
 {\large\bfseries 实验结果}
@@ -318,146 +318,250 @@ time python wordfreq_optimized.py
 \section{课后练习与结果}
 % 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
 
-\subsection*{实例 1}
+\subsection*{实例 1（开发环境与工具）}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例一的实验题目与要求描述。
-
+\textbf{实验题目：浏览一份 IDE 扩展列表，安装一个看起来对你有用的扩展。}
 \begin{lstlisting}
-# TODO: 实例1代码汇总
+# TODO: 实例1无代码汇总
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：如下图，安装成功}
 
 \resultimg{week\Week_ex1.png}{实例一 运行结果}
 
-\subsection*{实例 2}
+\subsection*{实例 2（开发环境与工具）}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
+\textbf{实验题目：为你正在做的一个项目配置 IDE 扩展和语言服务器。}
 
 \begin{lstlisting}
-# TODO: 实例2代码汇总
+# TODO: 实例2无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：如下图，配置成功}（已配置语言服务器增强pylance，所以下载ruff）
 
 \resultimg{week\Week_ex2.png}{实例二 运行结果}
 
-\subsection*{实例 3}
+\subsection*{实例 3（命令行环境）}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+\textbf{实验题目：}
+写出一个 ls 命令，让它按下面的方式列出文件：
 
-\begin{lstlisting}
+-包含所有文件，包括隐藏文件
+
+-文件大小以易读格式显示（例如 454M，而不是 454279954）
+
+-按最近修改时间排序
+
+-输出带颜色
+\begin{lstlisting}[language=bash]
 # TODO: 实例3代码汇总
+ls -laht --color=auto
+
 \end{lstlisting}
 
 \textbf{运行结果：}
 
 \resultimg{week\Week_ex3.png}{实例三 运行结果}
 
-\subsection*{实例 4}
+\subsection*{实例 4(命令行环境)}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+\textbf{实验题目：写两个 bash 函数 marco 和 polo，行为如下：每次执行 marco 时，都要以某种方式保存当前工作目录；之后无论你切到哪个目录，
+只要执行 polo，它都应该把你 cd 回执行 marco 时所在的目录。为了方便调试，
+你可以把代码写进 marco.sh，然后通过执行 source marco.sh 把这些定义重新加载到当前 shell。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例4代码汇总
+# 将函数加载到当前 Shell
+source marco.sh
+
+# 完整测试流程
+cd /etc
+marco    # 保存 /etc 目录
+cd ~
+polo     # 自动切回 /etc 目录
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：成功切回 /etc 目录}
 
 \resultimg{week\Week_ex4.png}{实例四 运行结果}
 
-\subsection*{实例 5}
+\subsection*{实例 5（命令行环境）}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+\textbf{实验题目：假设你有一个很少失败的命令。为了调试它，你需要把它的输出保存下来，但等到一次失败运行可能会很耗时。
+写一个 bash 脚本，不断运行下面这个脚本（此脚本参考原题目）直到它失败为止，
+并把标准输出和标准错误分别保存到文件里，最后把结果打印出来。顺便报告它运行了多少次才失败。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例5代码汇总
+#!/usr/bin/env bash
+
+# 配置：日志文件路径与待测脚本路径
+STDOUT_LOG="fail_stdout.log"
+STDERR_LOG="fail_stderr.log"
+TARGET_SCRIPT="./faulty_cmd.sh"
+
+# 运行次数计数器
+run_count=0
+
+# 无限循环执行命令，直到失败
+while true; do
+    run_count=$((run_count + 1))
+    # 执行待测脚本，分别重定向标准输出和标准错误
+    "$TARGET_SCRIPT" > "$STDOUT_LOG" 2> "$STDERR_LOG"
+    # 退出码非0则表示失败，终止循环
+    if [[ $? -ne 0 ]]; then
+        break
+    fi
+done
+
+# 打印最终结果
+echo "================================"
+echo "命令在第 $run_count 次运行时失败"
+echo "================================"
+echo -e "\n失败时的标准输出："
+cat "$STDOUT_LOG"
+echo "================================"
+echo -e "\n失败时的标准错误："
+cat "$STDERR_LOG"
+echo "================================"
+echo -e "\n输出已持久化保存到 $STDOUT_LOG 和 $STDERR_LOG 文件"
+
+# 添加执行权限
+chmod +x faulty_cmd.sh run_until_fail.sh
+
+# 运行测试脚本
+./run_until_fail.sh
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：如下图}
 
 \resultimg{week\Week_ex5.png}{实例五 运行结果}
 
-\subsection*{实例 6}
+\subsection*{实例 6(命令行环境)}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+\textbf{实验题目：在终端里启动一个 sleep 10000 任务，用 Ctrl-Z 把它挂起，
+再用 bg 让它继续在后台运行。然后使用 pgrep 找到它的 pid，
+再用 pkill 把它杀掉，整个过程都不要手动输入这个 pid。（提示：试试 -af 参数）
+}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例6代码汇总
+# 1. 启动前台 sleep 进程
+sleep 10000
+
+# 2. 按下 Ctrl+Z 挂起进程（终端快捷键操作）
+
+# 3. 将挂起的进程放到后台继续运行
+bg
+
+# 4. 查找目标进程（带完整命令行验证）
+pgrep -af "sleep 10000"
+
+# 5. 精准终止目标进程
+pkill -f "sleep 10000"
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：完成要求，jobs检查显示无该进程}
 
+注：此题使用kali虚拟机，原因bash不自带pgrep和pkill命令，需安装procps。
 \resultimg{week\Week_ex6.png}{实例六 运行结果}
 
-\subsection*{实例 7}
+\subsection*{实例 7（命令行环境）}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+\textbf{实验题目：(虚拟机)进入 ~/.ssh/，检查你是否已经有一对 SSH 密钥。如果没有，
+就用 ssh-keygen -a 100 -t ed25519 生成一对。建议给密钥设置密码，并配合 ssh-agent 使用。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例7代码汇总
+cd ~/.ssh
+ls -la
+
+#创建密钥
+ssh-keygen -a 100 -t ed25519
+
+#将私钥加入 ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+ssh-add -l
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：创建密钥成功，ssh-agent成功添加私钥}
+
 
 \resultimg{week\Week_ex7.png}{实例七 运行结果}
+\resultimg{week\Week_ex7_2.png}{实例七 运行结果}
 
 \subsection*{实例 8}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+\textbf{实验题目：}
+\resultimg{week\Week_ex8_q.png}{}
+
 
 \begin{lstlisting}
-# TODO: 实例8代码汇总
+# TODO: 实例8无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：如下图}
 
 \resultimg{week\Week_ex8.png}{实例八 运行结果}
 
 \subsection*{实例 9}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+\textbf{实验题目：使用 ssh-copy-id vm 把你的 SSH 公钥复制到服务器上。}
 
 \begin{lstlisting}
-# TODO: 实例9代码汇总
+# TODO: 实例9无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：复制成功}
 
 \resultimg{week\Week_ex9.png}{实例九 运行结果}
 
 \subsection*{实例 10}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
+\textbf{实验题目：在虚拟机里执行 python -m http.server 8888 启动一个 Web 服务器。
+然后在你自己的机器上访问 http://localhost:9999，确认自己能访问虚拟机里的这个服务。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例10代码汇总
+#在kali中
+python3 -m http.server 8888
+
+#在本机中
+ssh -L 9999:localhost:8888 kali@192.168.204.131
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：本机成功访问 localhost:9999}
 
 \resultimg{week\Week_ex10.png}{实例十 运行结果}
 
 \subsection*{实例 11}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
-
-\begin{lstlisting}
+\textbf{实验题目：使用 Linux 上的 journalctl 或 macOS 上的 log 
+show 命令来获取最近一天中超级用户的登录信息及其所执行的指令。如果找不到相关信
+息，您可以执行一些无害的命令，例如 sudo ls 然后再次查看。}
+\begin{lstlisting}[language=bash]
 # TODO: 实例11代码汇总
+sudo journalctl --since "24 hours ago" _COMM=sudo --no-pager
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：查看了通过 sudo 执行的命令。}
 
 \resultimg{week\Week_ex11.png}{实例十一 运行结果}
 
@@ -468,6 +572,10 @@ time python wordfreq_optimized.py
 % ---------- 3. 解题感悟 ----------
 \section{解题感悟}
 % TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
-此处填写解题感悟。
+本周实验涉及命令行环境、开发工具、程序调试、自动化测试、性能分析以及 SSH 远程操作等多个方面。
+
+实验中遇到的问题主要包括后台进程状态变化、SSH 服务未启动、Windows 与 Kali 配置环境不同以及 SSH 主机别名无法解析等。通过查看错误信息、
+检查服务状态和分析命令输出，我逐渐形成了先定位问题、再提出解决方案的排错习惯。总体而言，本周实验将理论知识与
+实际操作结合起来，提高了我对 Linux 命令行、开发调试工具和系统服务的综合使用能力。
 
 \end{document}
