@@ -1,0 +1,457 @@
+% ============================================================
+%  系统开发工具基础 · 实验报告 
+%  作者：曾奕豪
+%  编译方式：XeLaTeX（需 ctex 宏包支持中文）
+%  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
+%  说明：本模板不依赖任何图片即可编译；
+%        图片文件存在时自动插入，不存在时显示占位提示框。
+%  图片统一放在 paper/figures/weekN_picture/ 子文件夹中（N 为周次），
+%        命名规则 weekN_xxx.png；每周只需修改下面的 \Week 即可。
+% ============================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ---------- 中文字体与页面 ----------
+% 中文支持：使用 ctex 宏包（编译用 XeLaTeX）。
+% 若在 Linux/TeX Live 下缺少 ctex，可安装 texlive-lang-chinese。
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+
+% ---------- 页眉 / 页脚 ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{实验报告 · 第 \Week 周}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 代码高亮环境 ----------
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{gray!70!black}\itshape,
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  captionpos=b,
+  showstringspaces=false,
+}
+
+% ---------- 图片插入宏 ----------
+% 题内图片：图注手动指定文字，不自动编号。
+% 图片统一放在 paper/figures/week\Week_picture/ 子文件夹中，
+% 文件名建议带周次前缀（如 week1_q1.png），每周只需修改 \Week 即可。
+%   \resetpic              每题开头调用一次（保留自 week1，兼容旧结构）
+%   \resultimg[宽度]{图片文件名}{图注}   图片存在→插入；不存在→占位框（不报错）
+% 自定义图注（如 commit 截图）：
+%   \resultimgcap[宽度]{图片文件名}{图注}
+\newcounter{picnum}
+\newcommand{\resetpic}{\setcounter{picnum}{0}}
+% 图片目录：根据 \Week 自动定位到 weekN_picture 子文件夹
+\newcommand{\picdir}{../../figures/week\Week_picture/}
+\newcommand{\resultimg}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+\newcommand{\resultimgcap}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+
+% ---------- 文档信息（每周只需改这三处） ----------
+\newcommand{\Week}{3}                        % 周次
+\newcommand{\ReportTitle}{系统开发工具基础实验报告}
+\newcommand{\ReportDate}{\today} % 日期，编译时自动取当天
+\newcommand{\RepoLink}{https://github.com/hzydy00/Base-of-system-development-tools} % 仓库链接
+
+% ============================================================
+\begin{document}
+
+% ---------- 封面 / 标题区 ----------
+\begin{center}
+  {\LARGE\bfseries \ReportTitle}\\[6pt]
+  {\Large 第 \Week\ 周}\\[12pt]
+  {\large 姓名：曾奕豪}\\
+  {\large 课程：系统开发工具基础}\\[6pt]
+  {\large \ReportDate}\\[16pt]
+  {\large 仓库：\url{\RepoLink}}
+\end{center}
+\vspace{0.8em}
+\hrule
+\vspace{1.2em}
+
+% ---------- 1. 课上内容与结果 ----------
+\section{课上内容与结果}
+% 开头先简述本周实验的主题、目标与涉及的工具 / 技术，再逐题列出课上内容。
+% 课上完成 4 个不同主题的题目，每题按「题目要求 → 代码 → 过程截图 → 实验结果」组织。
+\subsection*{学习主题}
+Packaging and Shipping Code；智能体编程；不止于代码；Python 与PyTorch
+
+\subsection*{实验环境}
+% 简述本实验的操作系统、命令行环境、所用工具及其版本。
+本实验在 Windows 11 操作系统（版本 10.0.26200.9168）上完成，使用 MINGW64（Git Bash）作为命令行终端，Python 版本为 3.14.0，采用 pip 作为包管理器。
+
+实验中用到的核心软件包包括：build（用于构建 wheel 与 sdist 源码包）、setuptools（作为
+ pyproject.toml 声明的构建后端）、pytest（用于单元测试）以及 PyTorch 2.14.0+cpu（用于线性回归模型训练）。
+其中 PyTorch 通过官方 CPU 专用源安装（pip install torch --index-url (https://download.pytorch.org/whl/cpu)），仅安装约 126MB 的 CPU 版本，避免下载体积庞大的 CUDA 版本；
+该版本已支持 Python 3.14（cp314 wheel）。整体实验环境满足课程所有题目的运行要求。
+
+\subsection*{题目一}
+\resetpic
+% 题目一 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q1.png}{题目一 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目一代码汇总
+# 1. 安装构建工具
+pip install build
+
+# 2. 构建 wheel（在 q09 目录下）
+python -m build
+
+# 3. 创建并激活虚拟环境
+python -m venv .venv
+source .venv/Scripts/activate    # Git Bash
+
+# 4. 从 wheel 安装
+pip install dist/greetlab_25100021005-0.1.0-py3-none-any.whl
+
+# 5. 验证（在 q09 之外）
+cd ..
+sdt-greet --name 25100021005
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check1.png}{题目一 实验过程截图：bulid成功}
+\resultimg{week\Week_check1_2.png}{题目一 实验过程截图：输出正确}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+1.wheel 文件生成`greetlab-25100021005-0.1.0-py3-none-any.whl`
+
+2.干净虚拟环境安装`Successfully installed greetlab-25100021005-0.1.0`
+
+3.q09 之外运行 `sdt-greet`输出 `Hello, 25100021005!`
+
+4.命令行参数 `--name` 传递正确读取并打印
+
+\subsection*{题目二}
+\resetpic
+% 题目二 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q2.png}{题目二 题目要求}
+
+\begin{lstlisting}[language=python]
+# TODO: 题目二代码汇总
+
+#`tests/test_blank_name.py`（失败测试）
+import sys
+import pytest
+from greetlab.cli import main
+
+def test_blank_name_exits_with_code_2(monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["sdt-greet", "--name", "   "])
+    with pytest.raises(SystemExit) as exc_info:
+        main()
+    assert exc_info.value.code == 2
+
+# 题目二prompts
+目标：修改 src/greetlab/cli.py 中的 main() 函数，当 --name 参数只包含空白字符（空格、制表符等）时，程序应以 SystemExit(2) 结束（即调用 sys.exit(2)）。
+
+约束：
+1. 只修改 src/greetlab/cli.py，不要改测试文件、pyproject.toml 或其他文件
+2. 保持现有功能不变：正常 name 仍打印 "Hello, {name}!"
+3. 不要添加不必要的依赖或重构
+
+验证命令：python -m pytest
+要求：修改后运行该命令，所有测试通过。
+
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check2.png}{题目二 实验过程截图：空白字符运行测试失败}
+\resultimg{week\Week_check2_2.png}{题目二 实验过程截图：ai修改后测试成功}
+\resultimg{week\Week_check2_3.png}{题目二 实验过程截图：ai修复日志}
+
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- 测试驱动：先写失败测试（空白 name 应 `SystemExit(2)`），运行确认 `1 failed`
+
+- AI 修复：给 AI 明确提示后，仅修改 `cli.py`，新增 `if not a.name.strip(): sys.exit(2)`
+
+- 验证通过：再次运行 `pytest` → `1 passed`
+
+- 日志记录： 记录提示、改动和验证结果
+
+\subsection*{题目三}
+\resetpic
+% 题目三 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q3.png}{题目三 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目三无代码汇总
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check3.png}{题目三 实验过程截图：查看环境}
+\resultimg{week\Week_check3_2.png}{题目三 实验过程截图：修改md文档}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- Issue 可复现：环境（Windows 11 / Python 3.14.0）、复现命令（sdt-greet --name " "）、期望（退出码 2）、实际（输出问候并以 0 退出）
+
+- 提交信息规范：祈使标题 ，正文含问题和方案
+
+- 评审意见可执行：标注 `[Blocking]`，指出具体行为、风险和建议动作
+
+- 篇幅达标：全文约 280 字，符合 400 字限制
+
+\subsection*{题目四}
+\resetpic
+% 题目四 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q4.png}{题目四 题目要求}
+
+\begin{lstlisting}[language=python]
+# TODO: 题目四代码汇总
+# TODO: 清空梯度、反向传播、更新参数
+    opt.zero_grad()
+    loss.backward()
+    opt.step()
+
+# TODO: 进入评估模式并在no_grad中打印最终损失、weight 和 bias
+model.eval()
+with torch.no_grad():
+    final_loss = loss_fn(model(x), y)
+    print(f"loss = {final_loss.item():.6f}")
+    print(f"weight = {model.weight.item():.6f}")
+    print(f"bias = {model.bias.item():.6f}")
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check4.png}{题目四 实验过程截图：下载torch}
+\resultimg{week\Week_check4_2.png}{题目四 实验过程截图：训练结果正确}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- 训练完成：200 轮 SGD 梯度下降，PyTorch CPU 版（torch 2.14.0+cpu）
+
+- 收敛良好：loss = 0.000000（要求 < 0.001，达标）
+
+- 参数正确：weight = 2.999997（≈3），bias = -1.000000（≈-1）
+
+- 可复现：seed 固定，结果稳定
+\subsection*{课上阶段提交记录}
+% 课上 4 题的 commit 记录截图（git log 或仓库 commits 列表）
+\resultimgcap[0.9\textwidth]{week\Week_commit_kecheng.png}{课上阶段 commit 记录}
+
+% ---------- 2. 课后练习与结果 ----------
+\section{课后练习与结果}
+% 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
+
+\subsection*{实例 1}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：创建一个带有 的 Python 包，
+并在虚拟环境中安装。创建一个锁文件并检查它。}
+
+\begin{lstlisting}
+# TODO: 实例1代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex1.png}{实例一 运行结果}
+
+\subsection*{实例 2}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例2代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex2.png}{实例二 运行结果}
+
+\subsection*{实例 3}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例3代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex3.png}{实例三 运行结果}
+
+\subsection*{实例 4}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例4代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex4.png}{实例四 运行结果}
+
+\subsection*{实例 5}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例5代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex5.png}{实例五 运行结果}
+
+\subsection*{实例 6}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例6代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex6.png}{实例六 运行结果}
+
+\subsection*{实例 7}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例7代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex7.png}{实例七 运行结果}
+
+\subsection*{实例 8}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例8代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex8.png}{实例八 运行结果}
+
+\subsection*{实例 9}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例9代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex9.png}{实例九 运行结果}
+
+\subsection*{实例 10}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例10代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex10.png}{实例十 运行结果}
+
+\subsection*{实例 11}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例11代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex11.png}{实例十一 运行结果}
+
+\subsection*{课后阶段提交记录}
+% 课后练习的 commit 记录截图
+\resultimgcap[0.9\textwidth]{week\Week_commit_kehou.png}{课后阶段 commit 记录}
+
+% ---------- 3. 解题感悟 ----------
+\section{解题感悟}
+% TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
+此处填写解题感悟。
+
+\end{document}
