@@ -307,99 +307,272 @@ with torch.no_grad():
 \textbf{实验题目：创建一个带有 的 Python 包，
 并在虚拟环境中安装。创建一个锁文件并检查它。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例1代码汇总
+# 环境检查
+python --version
+uv --version
+
+# 1. 项目骨架
+mkdir my_first_pkg && cd my_first_pkg
+mkdir -p src/my_pkg tests
+echo "# my-pkg" > README.md
+
+# 2. 创建并激活虚拟环境
+uv venv
+source .venv/Scripts/activate
+
+# 3. 安装依赖 + 生成锁文件 + 检查锁文件
+uv sync
+uv lock --check
+
+# 4. 运行验证
+uv run my-stats 1 2 3 4 5
+
+# 5. 修复：安装 dev 组依赖后重跑测试
+uv sync --extra dev
+uv run pytest
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果： .venv 创建成功（CPython 3.13.13），
+实验输出：均值 3.0000 / 方差 2.0000 / 标准差 1.4142
+ ，5 个测试全部通过}
 
 \resultimg{week\Week_ex1.png}{实例一 运行结果}
 
 \subsection*{实例 2}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
-
+\textbf{实验题目：从零开始氛围编程一个小应用。不要手动编写一行代码。}
 \begin{lstlisting}
-# TODO: 实例2代码汇总
+# TODO: 实例2无代码汇总
+#prompts汇总：
+D:\Course\System_tools_base\week3\ex\ex02，根据题目要求，
+在这个目录下工作。
+题目：从零开始氛围编程一个小应用。不要手动编写一行代码。
+应用素材：单位换算器，用于长度 / 温度 / 重量多类型互转
+
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：给ai简单的提示词，
+做出一个简易的单位换算器，运行结果正确，
+支持长度、温度、重量的互转。}
 
 \resultimg{week\Week_ex2.png}{实例二 运行结果}
 
 \subsection*{实例 3}
-\resetpic
-% 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+
+实验题目：对比三个 1000+ star 的 GitHub 项目的 README。它们都同样有用吗？找出哪些内容在你看来主要是噪音，为你将来写 README 提供借鉴。
 
 \begin{lstlisting}
-# TODO: 实例3代码汇总
+# TODO: 实例3无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+根据推荐，选取三个风格差异大的知名项目做对比（超 1000 star）：
+\begin{itemize}
+  \item fastapi（约 10.2 万 star）
+  \item requests（约 5.4 万 star）
+  \item linux（约 24 万 star）
+\end{itemize}
 
-\resultimg{week\Week_ex3.png}{实例三 运行结果}
+\textbf{实验结果：}
+
+三个项目的 README 虽然都远超 1000 star，但定位与有效信息密度差异显著，并非``同样有用''。对比见表 \ref{tab:readme-compare}。
+
+\begin{table}[htbp]
+  \centering
+  \caption{三个项目 README 对比（star 数为 2026 年 9 月数据）}
+  \label{tab:readme-compare}
+  \begin{tabular}{lccc}
+    \hline
+    项目 & star 数 & README 规模 & README 类型 \\
+    \hline
+    fastapi & 约 10.2 万 & 约 520 行 & 营销转化型 \\
+    requests & 约 5.4 万 & 约 78 行 & 实用克制型 \\
+    linux & 约 24 万 & 约 18 行 & 极简导航型 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+结论：fastapi 的 README 有效信息占比仅约三成，大量篇幅属于噪音；requests 的 README 短小精悍、几乎全部有效，是普通项目的最佳范本；linux 的 README 虽无噪音，但信息量近乎为零，仅充当文档导航入口，其极端风格不适合普通项目模仿。
+
+主要噪音内容（集中体现在 fastapi 的 README 中）：
+\begin{enumerate}
+  \item 赞助商广告：16 个以上赞助商 logo，约占全文三分之一篇幅，对使用者无价值；
+  \item 名人背书：引用 Microsoft、Uber、Netflix、Cisco 等公司员工的夸赞语录，无法验证；
+  \item 不可验证的夸张数字：如``开发提速 200\%--300\%''、``bug 减少 40\%''，脚注承认仅为内部团队估计；
+  \item 兄弟产品与纪录片推广：交叉销售 Typer、FastAPI Cloud 等内容，与当前项目使用无关。
+\end{enumerate}
+
+为将来编写 README 提供的借鉴：
+\begin{enumerate}
+  \item 第一屏给出``一句话定位 + 最小可运行示例''，让读者 30 秒内建立信任；
+  \item 社会证明使用可验证数据（如下载量、依赖仓库数），而非名人名言；
+  \item 安装命令放在靠前位置，一句话即可；
+  \item 详细教程放文档站，README 只做入口，避免篇幅过长；
+  \item 徽章数量控制在 3--5 个以内，超过即为噪音；
+  \item 真实踩坑提示（如克隆命令的注意事项）很有价值；
+\end{enumerate}
+
+
 
 \subsection*{实例 4}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+\textbf{实验题目：浏览一个知名项目
+（例如 Redis 或 curl）的源码。 
+找出讲义中提到的几种注释类型：
+有用的 TODO、指向外部文档的引用、
+解释为何避开某种做法的“why not”注释、
+或血泪教训。 如果这些注释不存在，会失去什么？
+}
 
 \begin{lstlisting}
-# TODO: 实例4代码汇总
+# TODO: 实例4无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{结果：}
 
-\resultimg{week\Week_ex4.png}{实例四 运行结果}
+本次浏览了 Redis（\texttt{https://github.com/redis/redis}）unstable 分支的 14 个核心源文件及 redis.conf，四类注释均有发现；其中字面 \texttt{TODO:} 
+注释为 0 处，Redis 团队改用``已知局限 + 优化方向''的完整句注释承担同样职责（如 ae.c 明确列出定时器 O(N) 遍历的两种优化方案，并注明 ``Redis 目前不需要''）。四类注释及其缺失后果见下表。
+
+\begin{tabular}{p{2.8cm}p{4.6cm}p{5.4cm}}
+\toprule
+注释类型 & Redis 实例（文件） & 若缺失会失去什么 \\
+\midrule
+有用的 TODO / 局限说明 & ae.c：定时器 O(N) 遍历 + 优化方向 & 已知局限被当缺陷``优化''而引入 bug \\
+\addlinespace
+指向外部文档的引用 & hyperloglog.c：论文 [1][2]、arXiv:1702.01284；redis.conf：官方文档 & 算法正确性与误差边界无法追溯验证 \\
+\addlinespace
+why not 注释 & server.c：存盘期间禁 rehash（COW）；dict.c：空桶扫描上限 & 有意的设计被``修复''，引发 COW 页风暴或主线程长阻塞 \\
+\addlinespace
+血泪教训 & redis.conf：fsync 阻塞、30 秒丢失窗口、AOF 截断与 ext4 & 已知故障被重复踩坑，甚至被当成新 bug 错误``修复'' \\
+\bottomrule
+\end{tabular}
+
+\textbf{结论：}这些注释承载的是``决策上下文''——代码为什么长这样、已知代价是什么、哪些方案被否决过。缺少它们，代码仍能运行，但维护者会失去判断依据：把有意的设计当成缺陷，把已知的坑当成新问题，修复与优化的成本都会显著上升。
 
 \subsection*{实例 5}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+\textbf{实验题目：把同一编程任务分别用
+内联聊天和智能体各做一次，比较体验差异。}
 
 \begin{lstlisting}
-# TODO: 实例5代码汇总
+# TODO: 实例5无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+此题复用实例1案例，分别用内联聊天和智能体完成同一任务（创建 Python 包、构建 wheel、安装并验证），比较体验差异。
 
-\resultimg{week\Week_ex5.png}{实例五 运行结果}
+\textbf{体验差异：}
+
+1. 内联聊天每步都要人复制、运行、发现问题再追问，步骤多、节奏慢，但每一步演化都看得见，学习价值高，适合初学者理解代码怎么一步步变完整；
+
+2. 智能体把 "写 — 跑 — 验 — 改" 的循环全部接管，交付快、结果完整，但过程近乎黑盒，适合熟练者快速产出完整任务；
+
+3. 出错机制不同：内联聊天的错误要人发现后带着报错去追问；智能体会自己读报错并修正，人工介入点明显更少；
+
+\resultimg{week\Week_ex5_1.png}{实例五 内联聊天}
+\resultimg{week\Week_ex5.png}{实例五 智能体编程}
 
 \subsection*{实例 6}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+\textbf{实验题目：用 AI 编程智能体浏览一个陌生的代码库，
+并让他解释其中部分功能}
 
 \begin{lstlisting}
-# TODO: 实例6代码汇总
+# TODO: 实例6无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{ai输出功能解释：}
+
+本实例选择 curl 的 URL 解析 API（\texttt{lib/urlapi.c}）作为解释对象。
+该模块把 URL 字符串拆解后存入 \texttt{CURLU} 句柄，句柄内含 scheme、
+user、password、host、port、path、query、fragment 等部件；对外通过 \texttt{curl\_url\_get()} 
+与 \texttt{curl\_url\_set()} 按 \texttt{CURLUPART\_*} 枚举读写单个部件，并用 flags 控制行为（如隐藏默认端口、追加查询串）。
+解析过程分为四阶段：先识别 scheme（缺省时默认 \texttt{https}，或按主机名前缀如 \texttt{ftp.} 猜测）；再解析 authority，依次抽出 \texttt{user:password@}、
+端口与主机名，端口支持 IPv6 的 [] 括法，冒号后无数字时按浏览器行为忽略；随后对主机名归一化，IPv4 简写如 \texttt{16843009}、\texttt{0x7f} 统一转为点分十进制，
+IPv6 规范化并提取 zone id；最后切分路径、查询与片段，并按 RFC 3986 5.2.4 清理路径中的 \texttt{./} 与 \texttt{../} 段。全程以 \texttt{CURLUE\_*} 错误码返回失败原因，
+并拒绝含控制字符的输入、限制 \texttt{file:} URL 只能指向本机，以防御注入与 UNC 路径攻击。
 
 \resultimg{week\Week_ex6.png}{实例六 运行结果}
 
 \subsection*{实例 7}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+\textbf{实验题目：大多数编程智能体都支持某种”YOLO 模式”（例如，
+在 Claude Code 中是 --dangerously-skip-permissions）。直接使用此模式并不安全，
+但在虚拟机或容器等隔离环境中运行编程智能体然后启用自主操作可能是可以接受的。在你的机器上搭建这样的环境。}
+
+
 
 \begin{lstlisting}
 # TODO: 实例7代码汇总
+# 1. 启动 Docker Desktop 并确认引擎
+docker version
+
+# 2. 拉取轻量 Python 镜像
+docker pull python:3.12-slim
+
+# 3. 创建后台容器（sleep infinity 保持运行）
+docker run -d --name yolo-sandbox python:3.12-slim sleep infinity
+
+# 4. 容器内安装编程智能体 Aider
+docker exec yolo-sandbox pip install --no-cache-dir aider-chat
+
+# 5. 确认 YOLO 模式开关存在
+docker exec yolo-sandbox aider --help | Select-String "yes-always"
+#    --yes-always  Always say yes to every confirmation
+
+# 6. 容器内模拟 YOLO 模式危险操作（无确认删除文件）
+docker exec yolo-sandbox sh -c "mkdir -p /work && echo secret-token-123 > /work/secret.txt && rm -f /work/secret.txt"
+
+# 7. 验证宿主不受影响
+Test-Path C:\work\secret.txt        # 输出 False
+
+# 8. 出问题直接丢弃重建（新容器 ID 与旧的不同）
+docker rm -f yolo-sandbox
+docker run -d --name yolo-sandbox python:3.12-slim sleep infinity
 \end{lstlisting}
 
-\textbf{运行结果：}
 
-\resultimg{week\Week_ex7.png}{实例七 运行结果}
+\textbf{运行结果：}
+本机已安装 Docker Desktop（29.5.2，WSL2 后端），
+故采用容器方案：拉取 \texttt{python:3.12-slim}
+ 镜像，创建 \texttt{yolo-sandbox} 容器，
+在容器内安装支持 \texttt{--yes-always}
+（等价于 YOLO 模式）的编程智能体 Aider，并验证隔离性。
+
+\resultimg{week\Week_ex7.png}{实例七 环境搭建}
 
 \subsection*{实例 8}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+\textbf{实验题目：试着写一个正则表达式，并使用 grep 命令行工具 
+在你的代码中查找 subprocess.Popen(..., shell=True) 的出现位置。}
 
-\begin{lstlisting}
+\begin{lstlisting}[language=bash]
 # TODO: 实例8代码汇总
+# 1. 朴素搜索（观察误报，预期命中 8 行）
+grep -n "shell=True" sample_shell.py
+
+# 2. ERE 单行版：Popen 参数到第一个 ) 前的 shell=True
+grep -nE 'subprocess\.Popen\([^)]*shell[[:space:]]*=[[:space:]]*True' sample_shell.py
+
+# 3. PCRE 单行版：非贪婪 .*?（需先设置 UTF-8 locale）
+export LC_ALL=C.UTF-8
+grep -nP 'subprocess\.Popen\(.*?shell\s*=\s*True' sample_shell.py
+
+# 4. PCRE 多行版：(?s:.*?) 让 . 匹配换行，可跨行匹配
+grep -nP 'subprocess\.Popen\((?s:.*?)shell\s*=\s*True' sample_shell.py
+
+# 5. 递归审计真实代码目录（排除 .venv 与演示目录 ex08）
+grep -rnP 'subprocess\.Popen\((?s:.*?)shell\s*=\s*True' \
+    /d/Course/System_tools_base/week3/ex \
+    --include='*.py' --exclude-dir=.venv --exclude-dir=ex08
+echo $?    # 预期 1 = 无匹配
 \end{lstlisting}
 
 \textbf{运行结果：}
@@ -409,41 +582,43 @@ with torch.no_grad():
 \subsection*{实例 9}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+\textbf{实验题目：在你的 IDE 或文本编辑器里练习 regex 查找替换，
+把这些讲义中的 - Markdown 项目符号标记替换为 * 项目符号标记。}
 
 \begin{lstlisting}
-# TODO: 实例9代码汇总
+# TODO: 实例9无代码汇总
 \end{lstlisting}
 
-\textbf{运行结果：}
+\textbf{运行结果：正则替换如下图所示，所有 Markdown 项目符号 - 均被替换为 *，且未误伤其他内容。}
 
 \resultimg{week\Week_ex9.png}{实例九 运行结果}
 
 \subsection*{实例 10}
 \resetpic
 % 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
-
-\begin{lstlisting}
+\textbf{实验题目：安装 Docker，用它用 docker compose 本地搭建missing-semester课程网站。}
+\begin{lstlisting}[language=bash]
 # TODO: 实例10代码汇总
+docker ps                                    # 确认引擎
+git clone --depth 1 https://github.com/missing-semester/missing-semester.git
+docker compose up --build -d                 # 构建并后台启动
+docker compose ps                            # 看容器状态
+curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/   # 200
+docker compose down                          # 停止
+
 \end{lstlisting}
 
 \textbf{运行结果：}
 
-\resultimg{week\Week_ex10.png}{实例十 运行结果}
+- 容器 missing-semester-server-1 运行正常，0.0.0.0:4000->4000/tcp 映射成功
 
-\subsection*{实例 11}
-\resetpic
-% 实验题目：TODO 简述本实例的实验题目与要求
-\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
+- Jekyll 站点构建 4.2 秒完成，日志显示 Server running... http://0.0.0.0:4000
 
-\begin{lstlisting}
-# TODO: 实例11代码汇总
-\end{lstlisting}
+- 浏览器打开 http://localhost:4000 ,首页标题确认是 "The Missing Semester of Your CS Education"
 
-\textbf{运行结果：}
+\resultimg{week\Week_ex10.png}{实例十 运行结果：搭建中}
+\resultimg{week\Week_ex10_2.png}{实例十 运行结果：本地运行成功}
 
-\resultimg{week\Week_ex11.png}{实例十一 运行结果}
 
 \subsection*{课后阶段提交记录}
 % 课后练习的 commit 记录截图
@@ -452,6 +627,10 @@ with torch.no_grad():
 % ---------- 3. 解题感悟 ----------
 \section{解题感悟}
 % TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
-此处填写解题感悟。
-
+做完这一系列练习，最大的体会是：工具本身并不难，难的是理解每个工具 "为什么存在"。
+命令行、正则、包管理、容器这些平日里被图形界面藏起来的东西，恰恰是工程世界里最通用、
+最持久的能力 —— 它们不依赖某个软件的版本，学会了就一直在。过程中的几次 "翻车" 也让我明白，
+调试和排错才是学习的真正主体：报错不可怕，可怕的是不读报错、不查文档、不验证结果。另一个深刻的感受是
+，AI 编程助手正在大幅降低入门门槛，但它不会替你建立判断力：一个命令该不该执行、一个正则会不会误伤、
+一个环境是否隔离，这些安全意识依然要自己长出来。工具是手段，解决问题的思路才是目的。
 \end{document}
