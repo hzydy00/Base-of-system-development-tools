@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>系统开发工具基础 · 学习仓库</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      background: #f4f6f8; color: #2d3748; line-height: 1.7;
+    }
+    header {
+      background: linear-gradient(135deg, #1a365d, #2b6cb0);
+      color: #fff; text-align: center; padding: 64px 16px 48px;
+    }
+    header h1 { font-size: 2rem; margin-bottom: 8px; }
+    header p { opacity: .85; }
+    header .meta { margin-top: 16px; font-size: .95rem; }
+    main { max-width: 760px; margin: 32px auto; padding: 0 16px; }
+    .card {
+      background: #fff; border-radius: 10px; padding: 24px 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 24px;
+    }
+    .card h2 {
+      font-size: 1.15rem; color: #2b6cb0;
+      border-left: 4px solid #2b6cb0; padding-left: 10px; margin-bottom: 16px;
+    }
+    ul.weeks { list-style: none; }
+    ul.weeks li {
+      padding: 10px 4px; border-bottom: 1px dashed #e2e8f0;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    ul.weeks li:last-child { border-bottom: none; }
+    ul.weeks a { color: #2b6cb0; text-decoration: none; font-weight: 600; }
+    ul.weeks a:hover { text-decoration: underline; }
+    ul.weeks .topic { color: #718096; font-size: .9rem; }
+    a.repo-btn {
+      display: inline-block; background: #2b6cb0; color: #fff;
+      padding: 10px 22px; border-radius: 6px; text-decoration: none;
+    }
+    a.repo-btn:hover { background: #2c5282; }
+    footer { text-align: center; color: #a0aec0; font-size: .85rem; padding: 24px 0 40px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>系统开发工具基础</h1>
+    <p>Base of System Development Tools · 学习仓库主页</p>
+    <div class="meta">曾奕豪 · 25100021005</div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>每周实验报告</h2>
+      <ul class="weeks">
+        <li>
+          <a href="https://github.com/hzydy00/Base-of-system-development-tools/blob/main/paper/texpaper/week1/week1.pdf">第 1 周</a>
+          <span class="topic">课程入门与环境搭建</span>
+        </li>
+        <li>
+          <a href="https://github.com/hzydy00/Base-of-system-development-tools/blob/main/paper/texpaper/week2/week2.pdf">第 2 周</a>
+          <span class="topic">命令行与版本控制</span>
+        </li>
+        <li>
+          <a href="https://github.com/hzydy00/Base-of-system-development-tools/blob/main/paper/texpaper/week3/week3.pdf">第 3 周</a>
+          <span class="topic">打包发布与智能体编程</span>
+        </li>
+        <li>
+          <a href="https://github.com/hzydy00/Base-of-system-development-tools/blob/main/paper/texpaper/week4/week4.pdf">第 4 周</a>
+          <span class="topic">代码质量 · 元编程 · 大杂烩</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>源码仓库</h2>
+      <p style="margin-bottom:16px">本页面由 GitHub Pages 自动发布：推送到 main 分支的 docs/ 目录后无需任何手动操作，站点自动更新。</p>
+      <a class="repo-btn" href="https://github.com/hzydy00/Base-of-system-development-tools">访问 GitHub 仓库 →</a>
+    </div>
+  </main>
+
+  <footer>
+    由 GitHub Pages 自动发布 · 页面最后更新：<span id="updated"></span>
+  </footer>
+  <script>
+    document.getElementById('updated').textContent = document.lastModified;
+  </script>
+</body>
+</html>
