@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install tools
+        run: python -m pip install ruff==0.16.6 pytest
+
+      - name: Lint (ruff check)
+        run: ruff check week4/ex/
+
+      - name: Format check (ruff format)
+        run: ruff format --check week4/ex/
+
+      - name: Run tests (greetlab)
+        working-directory: week4/ex/ex01
+        run: |
+          python -m pip install -e .
+          python -m pytest
