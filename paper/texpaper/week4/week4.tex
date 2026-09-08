@@ -1,0 +1,542 @@
+% ============================================================
+%  系统开发工具基础 · 实验报告 
+%  作者：曾奕豪
+%  编译方式：XeLaTeX（需 ctex 宏包支持中文）
+%  用法：每周复制本文件为 weekN.tex，仅修改周次、日期、内容即可
+%  说明：本模板不依赖任何图片即可编译；
+%        图片文件存在时自动插入，不存在时显示占位提示框。
+%  图片统一放在 paper/figures/weekN_picture/ 子文件夹中（N 为周次），
+%        命名规则 weekN_xxx.png；每周只需修改下面的 \Week 即可。
+% ============================================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ---------- 中文字体与页面 ----------
+% 中文支持：使用 ctex 宏包（编译用 XeLaTeX）。
+% 若在 Linux/TeX Live 下缺少 ctex，可安装 texlive-lang-chinese。
+\usepackage[UTF8]{ctex}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
+
+% ---------- 页眉 / 页脚 ----------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{实验报告 · 第 \Week 周}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ---------- 代码高亮环境 ----------
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{gray!70!black}\itshape,
+  stringstyle=\color{red!60!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  breaklines=true,
+  tabsize=4,
+  captionpos=b,
+  showstringspaces=false,
+}
+
+% ---------- 图片插入宏 ----------
+% 题内图片：图注手动指定文字，不自动编号。
+% 图片统一放在 paper/figures/week\Week_picture/ 子文件夹中，
+% 文件名建议带周次前缀（如 week1_q1.png），每周只需修改 \Week 即可。
+%   \resetpic              每题开头调用一次（保留自 week1，兼容旧结构）
+%   \resultimg[宽度]{图片文件名}{图注}   图片存在→插入；不存在→占位框（不报错）
+% 自定义图注（如 commit 截图）：
+%   \resultimgcap[宽度]{图片文件名}{图注}
+\newcounter{picnum}
+\newcommand{\resetpic}{\setcounter{picnum}{0}}
+% 图片目录：根据 \Week 自动定位到 weekN_picture 子文件夹
+\newcommand{\picdir}{../../figures/week\Week_picture/}
+\newcommand{\resultimg}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+\newcommand{\resultimgcap}[3][0.8\textwidth]{%
+  \IfFileExists{\picdir #2}{%
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=#1]{\picdir #2}
+      \parbox{0.8\textwidth}{\centering\small #3}
+    \end{figure}%
+  }{%
+    \begin{center}
+      \fbox{\parbox{0.8\textwidth}{\centering\itshape [图片待补充] \detokenize{#2}\\\small #3}}
+    \end{center}%
+  }%
+}
+
+% ---------- 文档信息（每周只需改这三处） ----------
+\newcommand{\Week}{4}                        % 周次
+\newcommand{\ReportTitle}{系统开发工具基础实验报告}
+\newcommand{\ReportDate}{\today} % 日期，编译时自动取当天
+\newcommand{\RepoLink}{https://github.com/hzydy00/Base-of-system-development-tools} % 仓库链接
+
+% ============================================================
+\begin{document}
+
+% ---------- 封面 / 标题区 ----------
+\begin{center}
+  {\LARGE\bfseries \ReportTitle}\\[6pt]
+  {\Large 第 \Week\ 周}\\[12pt]
+  {\large 姓名：曾奕豪}\\
+  {\large 课程：系统开发工具基础}\\[6pt]
+  {\large \ReportDate}\\[16pt]
+  {\large 仓库：\url{\RepoLink}}
+\end{center}
+\vspace{0.8em}
+\hrule
+\vspace{1.2em}
+
+% ---------- 1. 课上内容与结果 ----------
+\section{课上内容与结果}
+% 开头先简述本周实验的主题、目标与涉及的工具 / 技术，再逐题列出课上内容。
+% 课上完成 4 个不同主题的题目，每题按「题目要求 → 代码 → 过程截图 → 实验结果」组织。
+\subsection*{学习主题}
+
+代码质量；元编程；大杂烩；
+
+\subsection*{实验环境}
+% 简述本实验的操作系统、命令行环境、所用工具及其版本。
+本实验在 Windows 操作系统上完成，命令行环境使用 Git Bash（MINGW64）与 PowerShell。
+Python 版本 3.14，代码质量与构建工具链为：ruff 0.16.6（代码格式化与静态检查）、
+pytest 9.0.3（单元测试）、GNU Make 4.4.1（增量构建）、jq（JSON 处理）、curl（HTTP 请求）、Git 2.53.0.windows.2（版本控制）。
+
+\subsection*{题目一}
+\resetpic
+% 题目一 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q1.png}{题目一 题目要求}
+
+\begin{lstlisting}
+## TODO: 题目一代码汇总，分为toml，python，bash三部分
+
+# pyproject.toml 追加段
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=python]    
+# tests/test_normal_name.py（新增）
+import sys
+
+from greetlab.cli import main
+
+
+def test_normal_name_prints_greeting(capsys, monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["sdt-greet", "--name", "Alice"])
+    main()
+    captured = capsys.readouterr()
+    assert captured.out == "Hello, Alice!\n"
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]    
+# check.sh（新建）
+#!/usr/bin/env bash
+set -euo pipefail
+
+ruff format --check .
+ruff check .
+python -m pytest
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check1.png}{题目一 实验过程截图}
+\resultimg{week\Week_check1_2.png}{题目一 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- ./check.sh 一次通过：ruff format --check（5 files already formatted）
+
+-  ruff check（All checks passed!）
+
+- pytest（2 passed）→ 退出码 0。
+
+质量门禁绿灯，本地检查与提交前自检闭环成立。
+
+\subsection*{题目二}
+\resetpic
+% 题目二 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q2.png}{题目二 题目要求}
+
+\begin{lstlisting}
+# TODO: 题目二代码汇总，分makefile和bash两部分
+
+# makefile部分
+.PHONY: all clean
+
+all: stats.txt report.txt
+
+stats.txt: data.csv stats.py
+	python stats.py
+
+report.txt: report.md stats.txt build_report.py
+	python build_report.py
+
+clean:
+	rm -f stats.txt report.txt
+
+
+\end{lstlisting}
+\begin{lstlisting}
+# python部分
+# 首次构建 —— 预期依次执行两个配方
+make
+# 查看产物（预期 stats.txt=10；report.txt 含 "# Data Report" 和 "Total: 10"）
+cat stats.txt
+cat report.txt
+
+# 无改动再 make —— 预期 "Nothing to be done for 'all'."
+make
+
+# touch 数据文件后再 make —— 预期两个配方重新执行
+touch data.csv
+make
+
+# 清理 —— 预期只删除两个生成物
+make clean
+ls
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check2.png}{题目二 实验过程截图：首次构建，查看产物}
+\resultimg{week\Week_check2_2.png}{题目二 实验过程截图：touch后再构建，清理产物}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- 首次 make：生成 stats.txt（10）和 report.txt（Total: 10）。
+
+- 无改动再 make：Nothing to be done，配方不执行。
+
+- touch data.csv 后 make：沿依赖链连锁重建两个产物。
+
+- make clean：只删除生成物，源文件保留。
+\subsection*{题目三}
+\resetpic
+% 题目三 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q3.png}{题目三 题目要求}
+
+\begin{lstlisting}[language=bash]
+# TODO: 题目三代码汇总
+# api_report.sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+{
+  echo "# Package Report"
+  echo ""
+  echo "| name | version | downloads |"
+  echo "|---|---|---|"
+  curl -fsS http://127.0.0.1:8000/packages.json \
+    | jq -r '[.[] | select(.status == "active" and .downloads >= 100)]
+             | sort_by(-.downloads, .name)
+             | .[] | "| \(.name) | \(.version) | \(.downloads) |"'
+} > summary.md
+
+# 终端 A：启动本地服务（保持运行）
+python -m http.server 8000
+
+# 终端 B（另开一个）：取数 + 筛选排序，一步验证
+curl -fsS http://127.0.0.1:8000/packages.json
+curl -fsS http://127.0.0.1:8000/packages.json | jq -r '[.[] | select(.status == "active" and .downloads >= 100)] | sort_by(-.downloads, .name) | .[] | [.name, .version, .downloads] | @tsv'
+
+# 运行脚本生成报告
+./api_report.sh
+
+# 查看结果
+cat summary.md
+
+# 回到终端 A，Ctrl+C 停止服务
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check3.png}{题目三 实验过程截图}
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- python -m http.server 8000 启动后，curl -fsS 成功取回 packages.json  5 条记录。
+
+- jq 筛选：beta（status=inactive） 与 epsilon（downloads=80 < 100） 被剔除，仅剩 lpha、gamma、delta 三条。
+
+- 排序：downloads 降序为 450、450、120；gamma 与 delta 同为 450 时按 name 升序，delta 排在 gamma 前。
+
+- api\_report.sh 生成 summary.md
+
+\subsection*{题目四}
+\resetpic
+% 题目四 问题截图（放在代码汇总之前）
+\resultimgcap[0.8\textwidth]{week\Week_q4.png}{题目四 题目要求}
+
+\begin{lstlisting}
+# TODO: 题目四代码汇总，分为2部分
+
+# .gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Makefile
+.PHONY: check build clean
+
+check:
+	./check.sh
+
+build:
+	python -m build --wheel
+
+clean:
+	rm -rf dist build src/*.egg-info
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash]
+# 红 → 绿
+./check.sh                    # 改坏后：1 failed（红）；修复后：2 passed（绿）
+
+# 构建与校验
+make check
+make build
+sha256sum dist/greetlab_25100021005-0.1.0-py3-none-any.whl
+
+# 内容聚焦提交（外部仓库根目录）
+git add .gitignore
+git commit -m "chore: ignore python cache and build artifacts"
+git add week4/q/q16
+git commit -m "week4 q16: scaffold greetlab from q13"
+git add week4/q/q16/src/greetlab/cli.py
+git commit -m "fix: greet with actual name instead of literal string"
+git log --oneline
+
+
+\end{lstlisting}
+
+\begin{center}
+{\large\bfseries 部分实验过程截图}
+\end{center}
+
+\resultimg{week\Week_check4.png}{题目四 实验过程截图:运行check.sh, ruff 照常通过，但pytest失败}
+\resultimg{week\Week_check4_2.png}{题目四 实验过程截图:修复后通过makefile运行check和build，正常}
+\resultimg{week\Week_check4_3.png}{题目四 实验过程截图:查看wheel的SHA-256值，并提交最终改动}
+
+
+\begin{center}
+{\large\bfseries 实验结果}
+\end{center}
+
+- 改坏后， ./check.sh 红；修复后绿（2 passed）
+
+- 编写makefile，通过make build 产出 wheel，并显示 SHA-256 值
+
+- 外部仓库三步提交（chore → scaffold → fix，仅 1 行改动）
+
+\subsection*{课上阶段提交记录}
+% 课上 4 题的 commit 记录截图（git log 或仓库 commits 列表）
+\resultimgcap[0.9\textwidth]{week\Week_commit_kecheng.png}{课上阶段 commit 记录}
+
+% ---------- 2. 课后练习与结果 ----------
+\section{课后练习与结果}
+% 说明：课后完成 >10 个实例，每个实例按「实验题目 → 代码 → 运行结果」组织。
+
+\subsection*{实例 1}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例1代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex1.png}{实例一 运行结果}
+
+\subsection*{实例 2}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例二的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例2代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex2.png}{实例二 运行结果}
+
+\subsection*{实例 3}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例三的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例3代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex3.png}{实例三 运行结果}
+
+\subsection*{实例 4}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例四的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例4代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex4.png}{实例四 运行结果}
+
+\subsection*{实例 5}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例五的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例5代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex5.png}{实例五 运行结果}
+
+\subsection*{实例 6}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例六的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例6代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex6.png}{实例六 运行结果}
+
+\subsection*{实例 7}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例七的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例7代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex7.png}{实例七 运行结果}
+
+\subsection*{实例 8}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例八的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例8代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex8.png}{实例八 运行结果}
+
+\subsection*{实例 9}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例九的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例9代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex9.png}{实例九 运行结果}
+
+\subsection*{实例 10}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例10代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex10.png}{实例十 运行结果}
+
+\subsection*{实例 11}
+\resetpic
+% 实验题目：TODO 简述本实例的实验题目与要求
+\textbf{实验题目：}此处填写实例十一的实验题目与要求描述。
+
+\begin{lstlisting}
+# TODO: 实例11代码汇总
+\end{lstlisting}
+
+\textbf{运行结果：}
+
+\resultimg{week\Week_ex11.png}{实例十一 运行结果}
+
+\subsection*{课后阶段提交记录}
+% 课后练习的 commit 记录截图
+\resultimgcap[0.9\textwidth]{week\Week_commit_kehou.png}{课后阶段 commit 记录}
+
+% ---------- 3. 解题感悟 ----------
+\section{解题感悟}
+% TODO: 记录做题过程中的思考、遇到的问题与解决方式、收获与总结。
+此处填写解题感悟。
+
+\end{document}
