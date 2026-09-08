@@ -1,0 +1,18 @@
+# 只检查本实例目录，不干扰仓库其他部分的提交
+files: ^week4/ex/ex01/
+repos:
+  # 格式化器 + linter：ruff 官方钩子（版本与课上 ruff 0.16.6 一致）
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check    # linter：ruff check --fix
+        args: [--fix]
+      - id: ruff-format   # 格式化器：ruff format
+  # 通用文本卫生钩子
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace   # 删除行尾空格
+      - id: end-of-file-fixer     # 确保文件以换行符结尾
+      - id: check-yaml            # 校验 YAML 语法
+      - id: check-toml            # 校验 TOML 语法
