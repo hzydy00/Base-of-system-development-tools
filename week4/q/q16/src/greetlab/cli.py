@@ -8,4 +8,4 @@ def main():
     a = p.parse_args()
     if not a.name.strip():
         sys.exit(2)
-    print("Hello, name!")
+    print(f"Hello, {a.name}!")
