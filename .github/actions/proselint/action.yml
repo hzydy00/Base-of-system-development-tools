@@ -1,10 +1,10 @@
 name: 'proselint'
 description: 'Run proselint on all tracked Markdown files in the repository'
 inputs:
-  extra-args:
-    description: 'Extra arguments passed to proselint'
+  exclude:
+    description: 'Regex (grep -E); matching paths are skipped'
     required: false
-    default: ''
+    default: '^$'
 runs:
   using: 'composite'
   steps:
@@ -13,14 +13,15 @@ runs:
         python-version: '3.12'
     - name: Install proselint
       shell: bash
-      run: pip install proselint
+      run: pip install proselint==0.16.0
     - name: Run proselint on Markdown files
       shell: bash
       run: |
-        mapfile -t FILES < <(git ls-files '*.md')
+        mapfile -t FILES < <(git -c core.quotepath=false ls-files '*.md' \
+          | grep -Ev "${{ inputs.exclude }}" || true)
         if [ ${#FILES[@]} -eq 0 ]; then
-          echo "No Markdown files found, nothing to check."
+          echo "No Markdown files to check."
           exit 0
         fi
         echo "Checking ${#FILES[@]} Markdown files with proselint..."
-        proselint ${{ inputs.extra-args }} "${FILES[@]}"
+        proselint check "${FILES[@]}"

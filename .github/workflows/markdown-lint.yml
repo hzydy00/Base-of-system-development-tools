@@ -10,3 +10,7 @@ jobs:
 
       - name: Run custom proselint action
         uses: ./.github/actions/proselint
+        with:
+          # 排除第三方克隆的文档（missing-semester 站点与 gitignore 模板），
+          # 其余仓库自有 Markdown 全部检查
+          exclude: 'ex/ex10/missing-semester|ex/ex06/gitignore'
