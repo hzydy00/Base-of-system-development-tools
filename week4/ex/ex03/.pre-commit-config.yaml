@@ -1,0 +1,10 @@
+# 实例3：提交前执行 make paper.pdf，构建失败则拒绝提交
+repos:
+  - repo: local
+    hooks:
+      - id: make-paper-pdf
+        name: make paper.pdf (reject commit if build fails)
+        entry: make paper.pdf
+        language: system
+        pass_filenames: false
+        always_run: true
